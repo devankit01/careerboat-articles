@@ -1,0 +1,50 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../app/generated/prisma"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String    @default("Admin")
+  password  String
+  createdAt DateTime  @default(now())
+  articles  Article[]
+}
+
+model Article {
+  id        String         @id @default(cuid())
+  title     String
+  slug      String         @unique
+  header    String?
+  thumbnail String?
+  tags      String?
+  status    Status         @default(Draft)
+  content   Json
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  adminId   String
+  admin     Admin          @relation(fields: [adminId], references: [id])
+  media     ArticleMedia[]
+}
+
+model ArticleMedia {
+  id        String   @id @default(cuid())
+  url       String
+  type      String
+  order     Int
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+enum Status {
+  Draft
+  Published
+}

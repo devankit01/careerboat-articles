@@ -1,0 +1,12 @@
+"use client";
+
+import { inter } from "@/lib/fonts";
+import AdminArticleForm from "@/components/AdminArticleForm";
+
+export default function NewAdminArticlePage() {
+  return (
+    <div className={`${inter.className} max-w-3xl mx-auto px-4 py-8`}>
+      <AdminArticleForm mode="create" />
+    </div>
+  );
+}
