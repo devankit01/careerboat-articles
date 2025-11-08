@@ -46,7 +46,7 @@ export default function DeleteArticleButton({ id }: { id: string }) {
         open={open}
         onClose={() => setOpen(false)}
         onConfirm={handleConfirm}
-        title="Delete rticle"
+        title="Delete Article"
         message="Are you sure you want to delete this article? This action cannot be undone."
       />
     </>
