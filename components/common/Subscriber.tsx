@@ -9,8 +9,7 @@ export default function Subscriber() {
   const [lastName, setLastName] = useState("");
   const [isLoading, setLoading] = useState(false);
 
-  const baseurl ="https://dev-apis.careerloop.in/v1";
-  // const baseurl = 'http://localhost:5000'
+  const baseurl =process.env.NEXT_PUBLIC_NODE_URL ||'http://localhost:5000';
 
   const handleSubscriber = async (e: React.FormEvent) => {
     e.preventDefault();
