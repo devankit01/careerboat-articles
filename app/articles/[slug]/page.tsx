@@ -1,3 +1,4 @@
+import Subscriber from "@/components/common/Subscriber";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
@@ -86,12 +87,12 @@ function renderBlocks(blocks: any[]) {
       case "image":
         // eslint-disable-next-line @next/next/no-img-element
         return (
-          <div>
-            <img
+          <div className="p-6 bg-red-300 m-4">
+              <img
               key={i}
               src={b.url}
               alt={b.alt || ""}
-              className="max-w-md w-full mx-auto h-auto rounded- my-6 shadow-sm object-contain"
+              className=" max-w-xl h-auto mx-auto my-6 rounded shadow-sm bg-red-400 m-6"
             />
           </div>
         );
@@ -126,16 +127,16 @@ export default async function ArticleBySlugPage({
   const tagsArray = Array.isArray(article.tags)
     ? (article.tags as any)
     : article.tags
-    ? String(article.tags)
+      ? String(article.tags)
         .split(",")
         .map((t) => t.trim())
         .filter(Boolean)
-    : [];
+      : [];
 
   const isHtml = typeof (article as any).content === "string";
   return (
     <div className="bg-white min-h-screen">
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 md:py-10 py-4">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 md:py-10 py-4">
         <h1 className="md:text-4xl text-2xl font-semibold mb-3">
           {article.title}
         </h1>
@@ -156,7 +157,7 @@ export default async function ArticleBySlugPage({
           <img
             src={article.thumbnail}
             alt={article.title}
-            className="w-full h-56 md:h-72 object-cover rounded-lg mb-6 shadow-sm"
+            className="w-full img mb-6 shadow-sm"
           />
         ) : null}
         {tagsArray.length ? (
@@ -204,6 +205,9 @@ export default async function ArticleBySlugPage({
           )}
         </article>
       </main>
+
+
+      <Subscriber />
     </div>
   );
 }

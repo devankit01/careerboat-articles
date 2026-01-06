@@ -24,7 +24,7 @@ export default function DeleteArticleButton({ id }: { id: string }) {
       window.location.reload();
     } catch (err) {
       console.error("Delete error:", err);
-      alert("Failed to delete the article.");
+      alert("Failed to delete the blog.");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -46,8 +46,8 @@ export default function DeleteArticleButton({ id }: { id: string }) {
         open={open}
         onClose={() => setOpen(false)}
         onConfirm={handleConfirm}
-        title="Delete rticle"
-        message="Are you sure you want to delete this article? This action cannot be undone."
+        title="Delete Blog"
+        message="Are you sure you want to delete this blog? This action cannot be undone."
       />
     </>
   );

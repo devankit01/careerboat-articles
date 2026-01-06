@@ -50,17 +50,17 @@ export default async function EditAdminArticlePage({
 
   if (!article) {
     return (
-      <div className={`${inter.className} max-w-3xl mx-auto px-4 py-8`}>
-        <h1 className="text-2xl font-semibold mb-2">Edit Article</h1>
+      <div className={`${inter.className} max-w-6xl mx-auto px-4 py-8`}>
+        <h1 className="text-2xl font-semibold mb-2">Edit Blog</h1>
         <p className="text-sm text-gray-600">
-          Article not found or you may not have access.
+          Blog not found or you may not have access.
         </p>
       </div>
     );
   }
 
   return (
-    <div className={`${inter.className} max-w-3xl mx-auto px-4 py-8`}>
+    <div className={`${inter.className} max-w-6xl mx-auto px-4 py-8`}>
       <AdminArticleForm mode="edit" initialArticle={article} />
     </div>
   );

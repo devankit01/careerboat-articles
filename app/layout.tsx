@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { roboto, inter } from "../lib/fonts";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://careerboat.ai"),
@@ -57,12 +58,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.className}>
+      <body className={inter.className}>
         <div className={inter.className}>
           <Navbar />
         </div>
 
         <main>{children}</main>
+         <Toaster position="top-right" />
 
         <div className={inter.className}>
           <Footer />

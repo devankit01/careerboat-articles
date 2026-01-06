@@ -13,8 +13,8 @@ interface ConfirmDeleteModalProps {
 
 export default function ConfirmDeleteModal({
   open,
-  title = "Delete Article",
-  message = "Are you sure you want to delete this article? This action cannot be undone.",
+  title = "Delete Blog",
+  message = "Are you sure you want to delete this Blog? This action cannot be undone.",
   onClose,
   onConfirm,
 }: ConfirmDeleteModalProps) {

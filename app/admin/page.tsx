@@ -56,19 +56,18 @@ export default async function AdminDashboardPage() {
   }
 
   return (
-    <div
-      className={`${inter.className} max-w-4xl mx-auto min-h-screen px-4 py-4`}
+    <div className={`${inter.className} max-w-6xl mx-auto min-h-screen px-4 py-4`}
     >
       <div className="flex items-center justify-between mb-8">
         <h1 className="md:text-2xl text-lg font-semibold">
-          My Articles ({total})
+          My Blogs ({total})
         </h1>
         <Link
           href="/admin/articles/new"
           className="inline-flex items-center text-sm md:text-base font-medium gap-2 bg-[#006b6a] text-white px-4 py-1.5 rounded-md"
         >
           <Plus className="h-4 w-4" />
-          New Article
+          New Blog
         </Link>
       </div>
 

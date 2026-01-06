@@ -9,7 +9,7 @@ export default function Navbar() {
   useEffect(() => {
     const checkToken = () => {
       const allCookies = document.cookie;
-      console.log("🍪 All cookies:", allCookies);
+      console.log(" All cookies:", allCookies);
 
       const cookies = document.cookie.split(";");
       const tokenCookie = cookies.find((c) => c.trim().startsWith("token="));
@@ -21,19 +21,23 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="w-full bg-white">
-      <div className="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <nav className="w-full bg-white border-b  border-gray-800 shadow-sm ">
+      <div className="w-full mx-auto py-3 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <div className="flex-shrink-0">
+          <div className="flex shrink-0 ">
             <a
               href="/"
               className="md:text-2xl text-lg text-[#006b6a] font-bold"
             >
-              Careerboat.ai
+              <img
+                src="/LOGO.jpeg"
+                alt="Logo"
+                className="w-full h-16 object-cover"
+              />
             </a>
           </div>
 
-          <div className="flex items-center md:space-x-4 space-x-2">
+          <div className="flex items-center justify-end flex-wrap gap-2 md:space-x-4 ">
             {hasAdminToken ? (
               <Link
                 href="/admin"
@@ -43,7 +47,7 @@ export default function Navbar() {
               </Link>
             ) : null}
             <a
-              href="https://careerloop-dev.netlify.app/student"
+              href="https://careerloop-dev.netlify.app/"
               className="md:text-sm text-xs md:px-6 px-4 py-1.5 font-bold cursor-pointer rounded-md border border-[#006b6a] bg-[#006b6a] text-white"
             >
               Explore

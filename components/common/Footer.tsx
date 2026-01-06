@@ -61,7 +61,7 @@ const Footer = () => {
                       href="https://careerboat-articles.vercel.app/"
                       className="text-blueGray-600 hover:text-blueGray-800 font-normal block pb-2 text-sm"
                     >
-                      Articles
+                      Blogs
                     </Link>
                   </li>
                   <li>

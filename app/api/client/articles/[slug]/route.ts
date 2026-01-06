@@ -27,18 +27,18 @@ export async function GET(
 
     if (!article) {
       return NextResponse.json(
-        { success: false, message: "article not found" },
+        { success: false, message: "Blog not found" },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      message: "article fetched",
+      message: "Blogs fetched",
       article,
     });
   } catch (error) {
-    console.error("error fetching article by slug:", error);
+    console.error("error fetching Blogs by slug:", error);
     return NextResponse.json(
       {
         success: false,

@@ -14,30 +14,70 @@
 .article-content p {
   margin: 1rem 0;
 }
+
+.img{
+   display: block;
+  width: 70%;
+  height: 400px;         
+  margin: 1rem auto;
+  border-radius: 0.5rem;
+  object-fit: cover;   
+}
+
 .article-content img {
   display: block;
-  width: 100%;
-  height: 300px;         
-  margin: 1rem 0;
+  width: 70%;
+  height: 400px;         
+  margin: 1rem auto;
   border-radius: 0.5rem;
   object-fit: cover;      
 }
 
+@media (max-width: 768px) {
+  .article-content img {
+    width: 100%;
+    height: auto;        /* 🔥 height crop nahi hogi */
+    object-fit: contain; /* optional – poori image dikhegi */
+  }
+
+
+}
+
+.ProseMirror:focus {
+  outline: none !important;
+}
+
+.ProseMirror:focus-visible {
+  outline: none !important;
+}
+
 .article-content video {
   display: block;
-  width: 100%;
+  width: 70%;
   height: auto;
-  margin: 1rem 0;
+  margin: 1rem auto;
   border-radius: 0.5rem;
 }
+
+@media (max-width: 768px) {
+  .img,
+  .article-content video {
+    width: 100%;
+    height: auto;         
+    object-fit: contain; 
+  }
+}
+
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-
+html,
 body {
+  max-width: 100%;
+  /* overflow-x: hidden; */
   background: var(--background);
   color: var(--foreground);
 }
