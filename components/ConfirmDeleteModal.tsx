@@ -47,7 +47,7 @@ export default function ConfirmDeleteModal({
           <button
             aria-label="Close"
             onClick={onClose}
-            className="p-1.5 rounded-md"
+            className="p-1.5 rounded-md cursor-pointer"
           >
             <X className="h-4 w-4" />
           </button>
@@ -59,7 +59,7 @@ export default function ConfirmDeleteModal({
           <div className="flex justify-start gap-3">
             <button
               onClick={onClose}
-              className="px-4 py-1.5 text-sm font-semibold rounded-md border border-[#006b6a] text-[#006b6a] hover:bg-[#f0fdfa] transition-colors"
+              className="px-4 py-1.5 text-sm font-semibold rounded-md border border-[#006b6a] text-[#006b6a] hover:bg-[#f0fdfa] cursor-pointer transition-colors"
             >
               Cancel
             </button>
@@ -68,7 +68,7 @@ export default function ConfirmDeleteModal({
               onClick={async () => {
                 await onConfirm();
               }}
-              className="px-4 py-1.5 text-sm rounded-md font-semibold bg-[#006b6a] text-white hover:bg-[#005f5f] transition-colors"
+              className="px-4 py-1.5 text-sm rounded-md font-semibold bg-[#006b6a] text-white hover:bg-[#005f5f] cursor-pointer transition-colors"
             >
               Delete
             </button>
