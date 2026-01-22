@@ -61,10 +61,10 @@ export default function ArticlesList() {
       <div className="md:max-w-6xl w-full mx-auto md:px-8 px-6">
         <div className="mb-8 md:mb-16 md:my-6">
           <h1 className="text-lg md:text-2xl  md:font-bold font-semibold text-gray-900 ">
-            Read our Blogs
+            Read our Blogs & Articles
           </h1>
           <p className="md:text-md text-base text-gray-500 mb-4">
-             Learn how to build resumes, crack interviews, and grow your career with AI support
+            Learn how to build resumes, crack interviews, and grow your career with AI support
           </p>
         </div>
 
@@ -101,12 +101,7 @@ export default function ArticlesList() {
 
             <>
               {
-
-
                 articles.map((article: any) => (
-
-
-
                   <article
                     key={article.id}
                     onClick={() => router.push(`/articles/${article.slug}`)}
@@ -167,11 +162,8 @@ export default function ArticlesList() {
                       </div>
                     </div>
                   </article>
-
-
                 ))
               }
-
             </>
           ) : (
             <div className="text-center py-12">
@@ -181,9 +173,6 @@ export default function ArticlesList() {
             </div>
           )}
         </main>
-
-
-
         {totalPages > 1 && !loading && (
           <div className="flex justify-center text-sm md:text-base items-center gap-4 flex-wrap py-10">
             <button
@@ -233,8 +222,7 @@ export default function ArticlesList() {
           </div>
         )}
       </div>
-      <Subscriber/>
-
+      <Subscriber />
     </div>
   );
 }

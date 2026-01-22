@@ -58,7 +58,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <Link
-                      href="https://careerboat-articles.vercel.app/"
+                      href="https://articles.careerboat.ai"
                       className="text-blueGray-600 hover:text-blueGray-800 font-normal block pb-2 text-sm"
                     >
                       Blogs

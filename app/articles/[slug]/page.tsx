@@ -1,4 +1,6 @@
+import ShareButton from "@/app/ShareButton";
 import Subscriber from "@/components/common/Subscriber";
+import { Share2Icon } from "lucide-react";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
@@ -145,6 +147,7 @@ export default async function ArticleBySlugPage({
             {article.header}
           </p>
         ) : null}
+        <div className="flex justify-between items-center">
         <div className="text-sm text-black mb-6">
           By {article.admin.name} ·{" "}
           {new Date(article.createdAt).toLocaleDateString("en-US", {
@@ -152,6 +155,8 @@ export default async function ArticleBySlugPage({
             month: "short",
             day: "numeric",
           })}
+          </div>
+          <div className=""><ShareButton url={url}/></div>
         </div>
         {article.thumbnail ? (
           <img
@@ -161,13 +166,13 @@ export default async function ArticleBySlugPage({
           />
         ) : null}
         {tagsArray.length ? (
-          <div className="flex flex-wrap gap-1 mb-7">
+          <div className="flex flex-wrap gap-x-2 gap-y-2 mb-7">
             {tagsArray.map((tag: string, idx: number) => (
               <span
                 key={idx}
-                className="text-[#006b6a] font-semibold px-2 py-0.5 text-xs uppercase"
+                className="inline-flex text-[#006b6a] font-semibold  py-0.5 text-xs"
               >
-                {tag}
+               {tag}
               </span>
             ))}
           </div>

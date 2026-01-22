@@ -47,8 +47,8 @@ export default function Navbar() {
               </Link>
             ) : null}
             <a
-              href="https://careerloop-dev.netlify.app/"
-              className="md:text-sm text-xs md:px-6 px-4 py-1.5 font-bold cursor-pointer rounded-md border border-[#006b6a] bg-[#006b6a] text-white"
+              href="https://careerboat.ai/"
+              className="md:text-sm text-xs md:px-6 px-4 py-1.5 font-bold cursor-pointer rounded-md border border-[#006b6a] bg-[#006b6a] text-white hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-150 ease-in-out"
             >
               Explore
             </a>

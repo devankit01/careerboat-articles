@@ -112,7 +112,7 @@ export default function Subscriber() {
             <button
               type="submit"
               disabled={isLoading}
-              className="bg-[#006b6a] w-full text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-[#005453] transition"
+              className="bg-[#006b6a] w-full text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-[#005453] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-150 ease-in-out"
             >
               {isLoading ? "Subscribing..." : "Subscribe"}
             </button>
