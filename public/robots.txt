@@ -1,0 +1,12 @@
+User-agent: *
+
+Allow: /
+
+# Block common administrative and search result paths
+Disallow: /admin/
+Disallow: /login/
+Disallow: /search/
+Disallow: /api/
+
+# Link specifically to the subdomain sitemap
+Sitemap: https://articles.careerboat.ai/sitemap.xml
