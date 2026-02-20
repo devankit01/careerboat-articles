@@ -130,7 +130,7 @@ export default function ArticlesList() {
                           ? article.tags.map((tag: any, idx: any) => (
                             <span
                               key={idx}
-                              className="text-[#006b6a] text-xs font-semibold"
+                              className="text-[#4F47E5] text-xs font-semibold"
                             >
                               {tag}
                             </span>
@@ -144,21 +144,24 @@ export default function ArticlesList() {
                       </p>
 
                       <div className="flex justify-between items-center text-sm">
-                        <span>
+                        {/* <span>
                           {new Date(article.createdAt).toLocaleDateString("en-US", {
                             year: "numeric",
                             month: "short",
                             day: "numeric",
                           })}
-                        </span>
-
-                        <a
-                          href={`/articles/${article.slug}`}
-                          onClick={(e) => e.stopPropagation()}
-                          className="text-[#006b6a] font-medium hover:underline"
-                        >
-                          Read More →
-                        </a>
+                        </span> */}
+                        <button className="mt-4 min-w-full py-2 bg-[#FFD153] rounded-lg   hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-150 ease-in-out" >
+                          <a
+                            href={`/articles/${article.slug}`}
+                            onClick={(e) => e.stopPropagation()}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block text-sm font-semibold text-black min-w-full "
+                          >
+                            Read More →
+                          </a>
+                        </button>
                       </div>
                     </div>
                   </article>
@@ -194,7 +197,7 @@ export default function ArticlesList() {
                   <button
                     key={pageNum}
                     className={`px-4 py-2 rounded-lg font-medium transition-colors ${page === pageNum
-                      ? "bg-[#006b6a] text-white "
+                      ? "bg-[#4F47E5] text-white "
                       : "border border-gray-300 text-sm md:text-base text-gray-700 hover:bg-gray-50"
                       }`}
                     onClick={() => setPage(pageNum)}

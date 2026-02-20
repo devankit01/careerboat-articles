@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { roboto, inter } from "../lib/fonts";
+import { figtree } from "../lib/fonts";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import { Toaster } from "react-hot-toast";
@@ -57,18 +57,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className={inter.className}>
-          <Navbar />
-        </div>
+     <html lang="en">
+      <body className={figtree.className}>
+        <Navbar />
 
         <main>{children}</main>
-         <Toaster position="top-right" />
 
-        <div className={inter.className}>
-          <Footer />
-        </div>
+        <Toaster position="top-right" />
+
+        <Footer />
       </body>
     </html>
   );

@@ -14,7 +14,7 @@ const Footer = () => {
       <div className="md:mx-10 px-3">
         <div className="flex flex-wrap text-left lg:text-left">
           <div className="w-full lg:w-[50%] px-4">
-            <h4 className="md:text-2xl text-lg text-[#006b6a] font-bold text-primary">
+            <h4 className="md:text-2xl text-lg text-[#4F47E5] font-bold text-primary">
               Careerboat.ai
             </h4>
             <h5 className="text-base my-2 text-black">

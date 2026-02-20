@@ -27,7 +27,7 @@ export default function Navbar() {
           <div className="flex shrink-0 ">
             <a
               href="/"
-              className="md:text-2xl text-lg text-[#006b6a] font-bold"
+              className="md:text-2xl text-lg text-[#4F47E5] font-bold"
             >
               <img
                 src="/LOGO.jpeg"
@@ -41,14 +41,14 @@ export default function Navbar() {
             {hasAdminToken ? (
               <Link
                 href="/admin"
-                className="md:text-sm text-xs md:px-6 font-bold px-4 py-1.5 rounded-md border border-[#006b6a] bg-white text-black cursor-pointer"
+                className="md:text-sm text-xs md:px-6 font-bold px-4 py-1.5 rounded-md border border-[#4F47E5] bg-white text-[#4F47E5]  cursor-pointer hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-150 ease-in-out"
               >
                 Dashboard
               </Link>
             ) : null}
             <a
               href="https://careerboat.ai/"
-              className="md:text-sm text-xs md:px-6 px-4 py-1.5 font-bold cursor-pointer rounded-md border border-[#006b6a] bg-[#006b6a] text-white hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-150 ease-in-out"
+              className="md:text-sm text-xs md:px-6 px-4 py-1.5 font-bold cursor-pointer rounded-md border border-[#4F47E5] bg-[#4F47E5] text-white hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-150 ease-in-out"
             >
               Explore
             </a>

@@ -1,4 +1,4 @@
-import { inter } from "@/lib/fonts";
+import { figtree} from "@/lib/fonts";
 import AdminArticleForm, {
   type AdminArticle,
 } from "@/components/AdminArticleForm";
@@ -50,7 +50,7 @@ export default async function EditAdminArticlePage({
 
   if (!article) {
     return (
-      <div className={`${inter.className} max-w-6xl mx-auto px-4 py-8`}>
+      <div className={`${figtree.className} max-w-6xl mx-auto px-4 py-8`}>
         <h1 className="text-2xl font-semibold mb-2">Edit Blog</h1>
         <p className="text-sm text-gray-600">
           Blog not found or you may not have access.
@@ -60,7 +60,7 @@ export default async function EditAdminArticlePage({
   }
 
   return (
-    <div className={`${inter.className} max-w-6xl mx-auto px-4 py-8`}>
+    <div className={`${figtree.className} max-w-6xl mx-auto px-4 py-8`}>
       <AdminArticleForm mode="edit" initialArticle={article} />
     </div>
   );

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { inter } from "@/lib/fonts";
+import { figtree } from "@/lib/fonts";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Eye, Pencil, Plus } from "lucide-react";
@@ -8,7 +8,7 @@ import DeleteArticleButton from "@/components/DeleteArticleButton";
 async function getMyArticles() {
   const headersList = await headers();
 
-  // ✅ Use NEXT_PUBLIC_BASE_URL first, fallback to VERCEL_URL, then localhost
+  //  Use NEXT_PUBLIC_BASE_URL first, fallback to VERCEL_URL, then localhost
   const baseUrl =
     process.env.NEXT_PUBLIC_BASE_URL ||
     (process.env.VERCEL_URL
@@ -56,7 +56,7 @@ export default async function AdminDashboardPage() {
   }
 
   return (
-    <div className={`${inter.className} max-w-6xl mx-auto min-h-screen px-4 py-4`}
+    <div className={`${figtree.className} max-w-6xl mx-auto min-h-screen px-4 py-4`}
     >
       <div className="flex items-center justify-between mb-8">
         <h1 className="md:text-2xl text-lg font-semibold">
@@ -64,7 +64,7 @@ export default async function AdminDashboardPage() {
         </h1>
         <Link
           href="/admin/articles/new"
-          className="inline-flex items-center text-sm md:text-base font-medium gap-2 bg-[#006b6a] text-white px-4 py-1.5 rounded-md"
+          className="inline-flex items-center text-sm md:text-base font-medium gap-2 bg-[#4F47E5] text-white px-4 py-1.5 rounded-md"
         >
           <Plus className="h-4 w-4" />
           New Blog
@@ -104,7 +104,7 @@ export default async function AdminDashboardPage() {
                   <span
                     className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold border ${
                       a.status === "Published"
-                        ? "border-green-600 text-green-700"
+                        ? "border-[#4F47E5] text-[#4F47E5]"
                         : "border-gray-500 text-gray-700"
                     }`}
                   >

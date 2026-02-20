@@ -79,7 +79,7 @@ export default function Subscriber() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="example@email.com"
-                className="border w-full border-gray-300 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#006b6a]"
+                className="border w-full border-gray-300 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E5]"
               />
             </div>
             <div className="flex gap-2 w-full pt-6 pb-3">
@@ -92,7 +92,7 @@ export default function Subscriber() {
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   placeholder="First Name"
-                  className="border border-gray-300 rounded-md w-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#006b6a]"
+                  className="border border-gray-300 rounded-md w-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E5]"
                 />
               </div>
               <div>
@@ -104,7 +104,7 @@ export default function Subscriber() {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   placeholder="Last Name"
-                  className="border border-gray-300 rounded-md w-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#006b6a]"
+                  className="border border-gray-300 rounded-md w-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#4F47E5]"
                 />
               </div>
             </div>
@@ -112,7 +112,7 @@ export default function Subscriber() {
             <button
               type="submit"
               disabled={isLoading}
-              className="bg-[#006b6a] w-full text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-[#005453] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-150 ease-in-out"
+              className="bg-[#4F47E5] w-full text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-[#4F47E5] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-150 ease-in-out"
             >
               {isLoading ? "Subscribing..." : "Subscribe"}
             </button>

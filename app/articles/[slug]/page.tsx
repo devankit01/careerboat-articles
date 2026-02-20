@@ -170,7 +170,7 @@ export default async function ArticleBySlugPage({
             {tagsArray.map((tag: string, idx: number) => (
               <span
                 key={idx}
-                className="inline-flex text-[#006b6a] font-semibold  py-0.5 text-xs"
+                className="inline-flex text-[#4F47E5] font-semibold  py-0.5 text-xs"
               >
                {tag}
               </span>

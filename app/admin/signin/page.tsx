@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { inter } from "@/lib/fonts";
+import { figtree } from "@/lib/fonts";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -44,7 +44,7 @@ export default function AdminSignInPage() {
 
   return (
     <div
-      className={`${inter.className} min-h-screen flex items-center justify-center px-4`}
+      className={`${figtree.className} min-h-screen flex items-center justify-center px-4`}
     >
       <form
         onSubmit={onSubmit}
@@ -83,7 +83,7 @@ export default function AdminSignInPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full flex items-center justify-center gap-2 bg-[#006b6a] text-white py-2 rounded-md font-semibold disabled:opacity-80 disabled:cursor-not-allowed"
+          className="w-full flex items-center justify-center gap-2 bg-[#4F47E5] text-white py-2 rounded-md font-semibold disabled:opacity-80 disabled:cursor-not-allowed"
         >
           {loading ? (
             <>

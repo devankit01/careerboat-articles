@@ -1,14 +1,19 @@
 
-import { Roboto, Inter } from "next/font/google";
+import { Figtree } from "next/font/google";
 
-export const roboto = Roboto({
+export const figtree = Figtree({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-roboto",
+  variable: "--font-figtree",
 });
+// export const roboto = Roboto({
+//   subsets: ["latin"],
+//   weight: ["400", "500", "600", "700"],
+//   variable: "--font-roboto",
+// });
 
-export const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-inter",
-});
+// export const inter = Inter({
+//   subsets: ["latin"],
+//   weight: ["400", "500", "600", "700"],
+//   variable: "--font-inter",
+// });

@@ -438,7 +438,7 @@ export default function AdminArticleForm({
           <button
             type="submit"
             disabled={submitting}
-            className="flex items-center justify-center gap-2 px-6 py-2 bg-[#006b6a] text-white text-sm cursor-pointer rounded-lg font-semibold disabled:cursor-not-allowed disabled:opacity-80"
+            className="flex items-center justify-center gap-2 px-6 py-2 bg-[#4F47E5] text-white text-sm cursor-pointer rounded-lg font-semibold disabled:cursor-not-allowed disabled:opacity-80 hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-150 ease-in-out"
           >
             {submitting ? (
               <>
@@ -454,7 +454,7 @@ export default function AdminArticleForm({
           <button
             type="button"
             onClick={() => router.back()}
-            className="px-6 py-3 bg-gray-200 cursor-pointer text-black text-sm rounded-lg font-semibold"
+            className="px-6 py-3 bg-gray-200 cursor-pointer text-black text-sm rounded-lg font-semibold hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-150 ease-in-out"
           >
             Cancel
           </button>
