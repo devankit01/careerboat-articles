@@ -18,6 +18,7 @@ export async function GET(req: NextRequest) {
         select: {
           id: true,
           slug: true,
+          faqContent:true,
           tags: true,
           title: true,
           header: true,

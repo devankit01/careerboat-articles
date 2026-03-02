@@ -76,8 +76,12 @@ export async function POST(req: Request) {
     const header = (formData.get("header") as string) || undefined;
     const slugInput = (formData.get("slug") as string) || undefined;
     const contentRaw = formData.get("content") as string;
+    const faqRaw = formData.get("faqContent") as string | null;
     const tags = formData.get("tags") as string | null;
     const statusInput = (formData.get("status") as string) || "Draft";
+
+console.log("api check",faqRaw);
+
 
     if (!title || !contentRaw) {
       return NextResponse.json(
@@ -109,6 +113,10 @@ export async function POST(req: Request) {
       const buffer = Buffer.from(await thumbnailFile.arrayBuffer());
       thumbnailUrl = await uploadToS3(buffer, thumbnailFile.name);
     }
+    
+const faqString = faqRaw !== null ? String(faqRaw) : "";
+
+console.log("api string",faqString);
 
     const tagsString = tags
       ? tags
@@ -126,6 +134,7 @@ export async function POST(req: Request) {
         header,
         content: contentString,
         thumbnail: thumbnailUrl,
+        faqContent: faqString,
         tags: tagsString,
         status: statusInput === "Published" ? "Published" : "Draft",
         adminId,
@@ -133,6 +142,8 @@ export async function POST(req: Request) {
       include: { media: true },
     });
 
+    console.log("final",article);
+    
     return NextResponse.json({
       success: true,
       message: "article created",

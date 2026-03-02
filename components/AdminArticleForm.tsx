@@ -30,6 +30,7 @@ export type AdminArticle = {
   header?: string | null;
   content: any;
   tags?: string | null;
+  faqContent:any;
   thumbnail?: string | null;
   media?: { url: string }[];
   status?: "Draft" | "Published";
@@ -108,6 +109,14 @@ export default function AdminArticleForm({
       return blocksToHtml(initialArticle!.content as any[]);
     return "";
   });
+
+  const [faqHtml, setFaqHtml] = useState<string>(
+    typeof (initialArticle as any)?.faqContent === "string"
+      ? (initialArticle as any).faqContent
+      : ""
+  );
+
+
   const [tags, setTags] = useState(initialArticle?.tags ?? "");
   const [status, setStatus] = useState<"Draft" | "Published">(
     (initialArticle?.status as any) === "Published" ? "Published" : "Draft"
@@ -115,14 +124,18 @@ export default function AdminArticleForm({
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const TITLE_LIMIT = 60;
+  const SUBTITLE_LIMIT = 160;
+  const titleLength = title.trim().length;
+  const headerLength = header?.trim().length || 0;
 
+  const isTitleTooLong = titleLength > TITLE_LIMIT;
+  const isSubtitleTooLong = headerLength > SUBTITLE_LIMIT;
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
         heading: { levels: [1, 2, 3] },
       }),
-
-
       TextStyle,
       FontSize,               // 🔹 font-size + color base
       Color,                     // 🔹 text color
@@ -149,6 +162,34 @@ export default function AdminArticleForm({
     editable: true,
     onUpdate: ({ editor }) => {
       setHtml(editor.getHTML());
+    },
+  });
+
+  const faqEditor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        heading: { levels: [2, 3] }, // FAQ me usually h3 question use hota hai
+      }),
+      TextStyle,
+      FontSize,
+      Color,
+      Highlight.configure({ multicolor: true }),
+      Link.configure({
+        openOnClick: false,
+        HTMLAttributes: {
+          class: "text-blue-500 underline cursor-pointer",
+        },
+      }),
+      Placeholder.configure({
+        placeholder: "Write FAQ content here...",
+      }),
+    ],
+    content: faqHtml,
+    immediatelyRender: false,
+    autofocus: false,
+    editable: true,
+    onUpdate: ({ editor }) => {
+      setFaqHtml(editor.getHTML());
     },
   });
 
@@ -218,6 +259,10 @@ export default function AdminArticleForm({
   }
 
   async function onSubmit(e: React.FormEvent) {
+    if (titleLength > TITLE_LIMIT)
+      throw new Error("Title must be under 60 characters for SEO");
+    if (headerLength > SUBTITLE_LIMIT)
+      throw new Error("Subtitle must be under 160 characters for SEO");
     e.preventDefault();
     setSubmitting(true);
     setError(null);
@@ -225,14 +270,21 @@ export default function AdminArticleForm({
       if (!title.trim()) throw new Error("Title is required");
       if (!html || html === "<p></p>")
         throw new Error("Content cannot be empty");
+      const faqContentHtml =
+  faqEditor?.getHTML() === "<p></p>" ? "" : faqEditor?.getHTML();
       const form = new FormData();
+      
       form.append("title", title);
       form.append("header", header || "");
       form.append("content", html);
+      form.append("faqContent", faqContentHtml || "");
       form.append("tags", tags || "");
       form.append("status", status);
       if (thumbnailFile) form.append("thumbnail", thumbnailFile);
       let res: Response;
+
+      console.log("check",faqHtml);
+      
       if (mode === "create") {
         res = await fetch("/api/admin/articles", {
           method: "POST",
@@ -269,26 +321,49 @@ export default function AdminArticleForm({
         </div>
 
         <div className="space-y-2">
-          <label className="block text-base font-semibold">Title</label>
+          <label className="block text-base font-semibold">
+            Title
+          </label>
+
           <input
-            className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
+            className={`w-full border rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 
+    ${isTitleTooLong
+                ? "border-red-500 focus:ring-red-500"
+                : "border-gray-300 focus:ring-black"}`}
             placeholder="Blog title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
+
+          <div className="flex justify-between text-sm">
+            <span className={`${isTitleTooLong ? "text-red-600" : "text-gray-500"}`}>
+              {titleLength}/{TITLE_LIMIT} characters
+            </span>
+          </div>
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-semibold">Subtitle</label>
+          <label className="block text-sm font-semibold">
+            Subtitle
+          </label>
+
           <input
-            className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-black"
+            className={`w-full border rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2
+    ${isSubtitleTooLong
+                ? "border-red-500 focus:ring-red-500"
+                : "border-gray-300 focus:ring-black"}`}
             placeholder="Brief description or subtitle"
             value={header ?? ""}
             onChange={(e) => setHeader(e.target.value)}
           />
-        </div>
 
+          <div className="flex justify-between text-sm">
+            <span className={`${isSubtitleTooLong ? "text-red-600" : "text-gray-500"}`}>
+              {headerLength}/{SUBTITLE_LIMIT} characters
+            </span>
+          </div>
+        </div>
         <div className="space-y-2">
           <label className="block text-sm font-semibold">Status</label>
           <select
@@ -303,18 +378,7 @@ export default function AdminArticleForm({
 
         <div className="space-y-2 relative">
           <label className="block text-base font-semibold h-2 ">Content</label>
-          {/* <div className="flex items-center gap-2 pb-2 absolute top right"> */}
-          <div className="
-    sticky
-    top-0 
-    right-0 
-    flex 
-    items-center 
-    gap-2 
-    bg-white 
-    z-10 
-    p-2    
-  ">
+          <div className="sticky top-0  right-0 flex items-center gap-2 bg-white z-10 p-2  ">
             <button
               type="button"
               className="border rounded px-2 py-1 text-sm"
@@ -332,14 +396,16 @@ export default function AdminArticleForm({
               }
             >
               <option value="">Size</option>
-              <option value="12px">10</option>
-              <option value="12px">11</option>
+              <option value="11px">11</option>
               <option value="12px">12</option>
               <option value="14px">14</option>
               <option value="16px">16</option>
+              <option value="18px">18</option>
               <option value="20px">20</option>
               <option value="24px">24</option>
-              <option value="24px">28</option>
+              <option value="28px">28</option>
+              <option value="36px">36</option>
+              <option value="48px">48</option>
             </select>
             <input
               type="color"
@@ -410,6 +476,25 @@ export default function AdminArticleForm({
             onChange={(e) => setTags(e.target.value)}
             placeholder="tag1, tag2, tag3"
           />
+        </div>
+        <div className="space-y-2 mt-12 relative">
+          <label className="block text-base font-semibold">
+            FAQ Section
+          </label>
+
+          <div className="border rounded-md">
+            {faqEditor ? (
+              <EditorContent
+                editor={faqEditor}
+                className="tiptap prose max-w-none p-3 min-h-[250px]
+        focus:outline-none focus-visible:outline-none"
+              />
+            ) : (
+              <div className="p-3 text-sm text-gray-500">
+                Loading FAQ editor…
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="space-y-2">

@@ -24,6 +24,7 @@ export async function GET(
         title: true,
         header: true,
         content: true,
+        faqContent:true,
         thumbnail: true,
         tags: true,
         status: true,

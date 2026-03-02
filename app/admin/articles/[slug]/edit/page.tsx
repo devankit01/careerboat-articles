@@ -31,6 +31,7 @@ async function getArticleForAdmin(slug: string) {
     title: a.title,
     header: a.header,
     content: a.content,
+    faqContent:a.faqContent,
     tags: a.tags,
     thumbnail: a.thumbnail,
     media: a.media,

@@ -12,26 +12,29 @@ datasource db {
 model Admin {
   id        String    @id @default(cuid())
   email     String    @unique
-  name      String    @default("Admin")
   password  String
   createdAt DateTime  @default(now())
+  name      String    @default("Admin")
   articles  Article[]
 }
 
 model Article {
-  id        String         @id @default(cuid())
-  title     String
-  slug      String         @unique
-  header    String?
-  thumbnail String?
-  tags      String?
-  status    Status         @default(Draft)
-  content   Json
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
-  adminId   String
-  admin     Admin          @relation(fields: [adminId], references: [id])
-  media     ArticleMedia[]
+  id         String         @id @default(cuid())
+  title      String
+  content    Json
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  adminId    String
+  header     String?
+  tags       String?
+  thumbnail  String?
+  slug       String         @unique
+  status     Status         @default(Draft)
+  faqContent Json?
+  admin      Admin          @relation(fields: [adminId], references: [id])
+  media      ArticleMedia[]
+
+  @@index([adminId], map: "Article_adminId_fkey")
 }
 
 model ArticleMedia {
@@ -40,8 +43,10 @@ model ArticleMedia {
   type      String
   order     Int
   articleId String
-  article   Article  @relation(fields: [articleId], references: [id])
   createdAt DateTime @default(now())
+  article   Article  @relation(fields: [articleId], references: [id])
+
+  @@index([articleId], map: "ArticleMedia_articleId_fkey")
 }
 
 enum Status {

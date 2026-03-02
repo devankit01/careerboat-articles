@@ -25,6 +25,7 @@ export async function PUT(
     const title = formData.get("title") as string | null;
     const header = formData.get("header") as string | null;
     const contentRaw = formData.get("content") as string | null;
+    const faqRaw = formData.get("faqContent") as string | null;
     const slugInput = formData.get("slug") as string | null;
     const tags = formData.get("tags") as string | null;
     const statusInput = formData.get("status") as string | null;
@@ -46,6 +47,8 @@ export async function PUT(
         { status: 403 }
       );
     }
+    const faqString: string | undefined =
+      faqRaw !== null ? String(faqRaw) : undefined;
 
     // Handle thumbnail
     let thumbnailUrl = existingArticle.thumbnail;
@@ -100,7 +103,9 @@ export async function PUT(
     const updateData: any = {
       ...(title && { title }),
       ...(header !== null && { header }),
+      // ...(contentString !== undefined && { content: contentString }),
       ...(contentString !== undefined && { content: contentString }),
+      ...(faqString !== undefined && { faqContent: faqString }),
       ...(newSlug !== undefined && { slug: newSlug }),
       thumbnail: thumbnailUrl,
       tags: tagsString,

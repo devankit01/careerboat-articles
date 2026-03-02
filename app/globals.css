@@ -17,8 +17,8 @@
 
 .img{
    display: block;
-  width: 70%;
-  height: 400px;         
+  width: 75%;
+  height: 550px;         
   margin: 1rem auto;
   border-radius: 0.5rem;
   object-fit: cover;   
@@ -36,7 +36,7 @@
 @media (max-width: 768px) {
   .article-content img {
     width: 100%;
-    height: auto;        /* 🔥 height crop nahi hogi */
+    height: auto;        /*  height crop nahi hogi */
     object-fit: contain; /* optional – poori image dikhegi */
   }
 

@@ -15,6 +15,7 @@ export async function GET(
         slug: true,
         title: true,
         tags: true,
+        faqContent:true,
         thumbnail: true,
         header: true,
         content: true,

@@ -2,7 +2,6 @@
 
 import React, { useMemo } from "react";
 import { RWebShare } from "react-web-share";
-import { Share2 } from "lucide-react";
 
 export interface ShareButtonProps {
   url: string | number;

@@ -2,3 +2,4 @@
 ALTER TABLE `Article` ADD COLUMN `header` VARCHAR(191) NULL,
     ADD COLUMN `tags` VARCHAR(191) NULL,
     ADD COLUMN `thumbnail` VARCHAR(191) NULL;
+    ADD COLUMN `faqContent` JSON;
