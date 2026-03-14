@@ -1,0 +1,84 @@
+import Link from 'next/link';
+import type { Metadata } from 'next';
+import LeadModal from '@/components/LeadModal';
+import { decodeHtmlEntities, getRecentPosts, stripTags } from '@/lib/wp';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: 'https://aricles.careerboat.ai/'
+  }
+};
+
+function excerpt(input?: string | null) {
+  if (!input) return 'Read this post from Careerboat.';
+  const text = stripTags(input);
+  return text.length > 125 ? `${text.slice(0, 125)}...` : text;
+}
+
+export default async function HomePage() {
+  const posts = await getRecentPosts();
+
+  return (
+    <main>
+      <section className="mx-auto w-[min(1120px,92vw)] py-16 text-center md:py-24">
+        <p className="text-xs uppercase tracking-[0.16em] text-ember">Career Growth</p>
+        <h1 className="mx-auto mt-3 max-w-3xl text-4xl font-bold leading-tight md:text-6xl">
+          Learn practical skills that move your career forward.
+        </h1>
+        <p className="mx-auto mt-4 max-w-2xl text-lg text-clay">
+          Actionable writing on resumes, interviews, and role transitions from beginner to senior levels.
+        </p>
+      </section>
+
+      <section className="mx-auto w-[min(1120px,92vw)] pb-20">
+        <div className="mb-5 flex items-end justify-between gap-4">
+          <h2 className="text-2xl font-bold">Read our Articles</h2>
+        </div>
+
+        {posts.length === 0 ? (
+          <p className="rounded-xl border border-line bg-white p-4 text-clay">No posts found yet.</p>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => (
+              <article key={post.slug} className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-[0_12px_28px_rgba(27,39,94,0.06)] transition hover:-translate-y-0.5">
+                <Link href={`/${post.slug}`} className="block">
+                  <img
+                    src={post.featuredImage?.node?.sourceUrl || '/logo.jpeg'}
+                    alt={decodeHtmlEntities(post.featuredImage?.node?.altText || post.title)}
+                    className="h-48 w-full bg-[#e7e5ff] object-cover"
+                  />
+                </Link>
+                <div className="flex flex-1 flex-col p-5">
+                  <Link href={`/${post.slug}`}>
+                    <h3 className="text-xl font-semibold">{decodeHtmlEntities(post.title)}</h3>
+                  </Link>
+                  <p className="mt-2 text-clay">{excerpt(post.excerpt)}</p>
+                  <div className="mt-5 flex flex-col gap-3 border-t border-line pt-4 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="text-sm text-clay break-words">Author : {decodeHtmlEntities(post.author?.node?.name || 'Careerboat Team')}</p>
+                    <Link
+                      href={`/${post.slug}`}
+                      className="w-fit rounded-md bg-ember px-3 py-1.5 text-sm font-semibold text-white shadow-[0_8px_18px_rgba(79,70,229,0.2)] hover:bg-[#4338ca]"
+                    >
+                      Read Post
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-10 rounded-2xl border border-[#cfd3ff] bg-[#e9e8ff] p-6 text-center md:p-8">
+          <p className="text-xs uppercase tracking-[0.16em] text-ember">Free Resource</p>
+          <h3 className="mt-2 text-2xl font-bold md:text-3xl">Get your career growth checklist</h3>
+          <p className="mx-auto mt-2 max-w-2xl text-clay">
+            A practical step-by-step plan to improve your profile, interview prep, and role targeting.
+          </p>
+          <div className="mt-5 flex justify-center">
+            <LeadModal buttonLabel="Get Free Career Checklist" className="rounded-lg bg-ember px-5 py-3 font-semibold text-white shadow-[0_10px_24px_rgba(79,70,229,0.22)] hover:bg-[#4338ca]" />
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
