@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-sand text-ink antialiased;
+  background-image: radial-gradient(circle at 12% 8%, #ffffff 0%, transparent 30%), radial-gradient(circle at 88% 12%, #e7e5ff 0%, transparent 24%);
+}
+
+.prose-content h2 {
+  @apply mt-10 text-2xl font-bold;
+  scroll-margin-top: 100px;
+}
+
+.prose-content h3 {
+  @apply mt-8 text-xl font-semibold;
+}
+
+.prose-content p {
+  @apply mt-4 leading-8 text-[17px] text-[#363a46];
+}
+
+.prose-content ul,
+.prose-content ol {
+  @apply mt-4 pl-5 text-[#363a46];
+}
+
+.prose-content a {
+  @apply text-ember underline;
+}
+
+.prose-content img,
+.prose-content video,
+.prose-content iframe,
+.prose-content canvas,
+.prose-content svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.prose-content iframe {
+  width: 100%;
+  min-height: 320px;
+}
+
+.prose-content table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.prose-content pre {
+  overflow-x: auto;
+  border-radius: 12px;
+  padding: 14px;
+  background: #1f1a16;
+  color: #f7f2eb;
+}
+
+.prose-content blockquote {
+  margin-top: 1rem;
+  border-left: 4px solid #c9cdfa;
+  padding-left: 1rem;
+  color: #555d72;
+}
