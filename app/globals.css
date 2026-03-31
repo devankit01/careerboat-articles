@@ -11,6 +11,23 @@ body {
   background-image: radial-gradient(circle at 12% 8%, #ffffff 0%, transparent 30%), radial-gradient(circle at 88% 12%, #e7e5ff 0%, transparent 24%);
 }
 
+/* Callout headings sit inside .prose-content but must not use article h3 spacing/scale */
+.prose-content .not-prose h3.tldr-label {
+  @apply mt-0 text-xl font-extrabold uppercase tracking-[0.16em] text-[#171717];
+}
+
+.prose-content .not-prose .tldr-prose {
+  @apply font-bold text-[#171717];
+}
+
+.prose-content .not-prose .tldr-prose * {
+  @apply font-bold;
+}
+
+.not-prose .tldr-prose p {
+  @apply mt-0;
+}
+
 .prose-content h2 {
   @apply mt-10 text-2xl font-bold;
   scroll-margin-top: 100px;
@@ -27,6 +44,28 @@ body {
 .prose-content ul,
 .prose-content ol {
   @apply mt-4 pl-5 text-[#363a46];
+}
+
+.prose-content ul {
+  list-style-type: disc;
+}
+
+.prose-content ol {
+  list-style-type: decimal;
+}
+
+.prose-content li {
+  margin-top: 0.5rem;
+  line-height: 1.8;
+}
+
+.prose-content li::marker {
+  color: #4f46e5;
+}
+
+.prose-content li > ul,
+.prose-content li > ol {
+  margin-top: 0.5rem;
 }
 
 .prose-content a {

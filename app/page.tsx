@@ -5,7 +5,7 @@ import { decodeHtmlEntities, getRecentPosts, stripTags } from '@/lib/wp';
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: 'https://aricles.careerboat.ai/'
+    canonical: 'https://articles.careerboat.ai/'
   }
 };
 

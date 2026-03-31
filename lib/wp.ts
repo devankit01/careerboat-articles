@@ -29,6 +29,12 @@ export type PostDetail = {
   slug: string;
   date?: string | null;
   content?: string | null;
+  featuredImage?: {
+    node?: {
+      sourceUrl?: string | null;
+      altText?: string | null;
+    } | null;
+  } | null;
   seo?: {
     title?: string | null;
     metaDesc?: string | null;
@@ -58,7 +64,8 @@ export type PostTldr = {
 async function wpFetch<T>(query: string, variables: Record<string, unknown> = {}): Promise<T> {
   const response = await fetch(WP_GRAPHQL_ENDPOINT, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json',  'User-Agent': 'curl/8.5.0'},
+
     body: JSON.stringify({ query, variables }),
     next: { revalidate: 60 }
   });
@@ -122,6 +129,12 @@ export async function getPostBySlug(slug: string): Promise<PostDetail | null> {
             slug
             date
             content
+            featuredImage {
+              node {
+                sourceUrl
+                altText
+              }
+            }
             seo {
               title
               metaDesc

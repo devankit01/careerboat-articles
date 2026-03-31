@@ -2,6 +2,8 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import LeadModal from '@/components/LeadModal';
+import ShareMenu from '@/components/ShareMenu';
+import TableOfContents from '@/components/TableOfContents';
 import { decodeHtmlEntities, extractH2, getPostBySlug, getPostFaqsBySlug, getPostTldrBySlug, getRecentPosts, injectAfterFirstParagraph, injectH2Ids, stripTags } from '@/lib/wp';
 
 type PostPageProps = {
@@ -26,7 +28,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   const description = decodeHtmlEntities(post.seo?.metaDesc || stripTags(post.content || '').slice(0, 155));
   const ogTitle = decodeHtmlEntities(post.seo?.opengraphTitle || title);
   const ogDescription = decodeHtmlEntities(post.seo?.opengraphDescription || description);
-  const canonical = `https://aricles.careerboat.ai/${post.slug}`;
+  const canonical = `https://articles.careerboat.ai/${post.slug}`;
   const ogImage = post.seo?.opengraphImage?.sourceUrl;
 
   return {
@@ -47,7 +49,8 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       title: ogTitle,
       description: ogDescription,
       images: ogImage ? [ogImage] : undefined
-    }
+    },
+    
   };
 }
 
@@ -70,9 +73,9 @@ export default async function PostPage({ params }: PostPageProps) {
   const contentWithIds = injectH2Ids(rawContent, headings);
   const tldrBlock = tldr?.content
     ? `
-      <div class="not-prose mt-6 mb-6 rounded-2xl border border-[#cfd3ff] bg-[#e9e8ff] p-4 md:p-5">
-        <p class="text-xs uppercase tracking-[0.16em] text-[#4f46e5]">TLDR</p>
-        <div class="prose-content mt-2">${tldr.content}</div>
+      <div class="not-prose mb-6 rounded-2xl border border-[#cfd3ff] bg-[#e9e8ff] p-4 md:p-5">
+        <h3 class="tldr-label">TL;DR</h3>
+        <div class="tldr-prose prose-content mt-0">${tldr.content}</div>
       </div>
     `
     : '';
@@ -89,7 +92,7 @@ export default async function PostPage({ params }: PostPageProps) {
   const postTitle = decodeHtmlEntities(post.title);
   const wordCount = stripTags(rawContent).split(/\s+/).filter(Boolean).length;
   const readTime = Math.max(1, Math.ceil(wordCount / 220));
-  const shareUrl = encodeURIComponent(`https://aricles.careerboat.ai/${post.slug}`);
+  const shareUrl = encodeURIComponent(`https://articles.careerboat.ai/${post.slug}`);
   const shareText = encodeURIComponent(postTitle);
 
   return (
@@ -101,37 +104,18 @@ export default async function PostPage({ params }: PostPageProps) {
           <span>Author : {authorName}</span>
           {date && <span>Published on : {date}</span>}
           <span>Read time : {readTime} min</span>
-          <div className="ml-auto flex items-center gap-2">
-            <span className="text-ink">Share:</span>
-            <a
-              href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Share on Facebook"
-              className="rounded-md border border-line bg-[#f8faff] px-2 py-1 text-xs hover:bg-[#eef2ff]"
-            >
-              FB
-            </a>
-            <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Share on LinkedIn"
-              className="rounded-md border border-line bg-[#f8faff] px-2 py-1 text-xs hover:bg-[#eef2ff]"
-            >
-              IN
-            </a>
-            <a
-              href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Share on X"
-              className="rounded-md border border-line bg-[#f8faff] px-2 py-1 text-xs hover:bg-[#eef2ff]"
-            >
-              X
-            </a>
-          </div>
+          <ShareMenu shareUrl={shareUrl} shareText={shareText} />
         </div>
+
+        {post.featuredImage?.node?.sourceUrl ? (
+          <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-[#f8faff]">
+            <img
+              src={post.featuredImage.node.sourceUrl}
+              alt={decodeHtmlEntities(post.featuredImage.node.altText || postTitle)}
+              className="h-[240px] w-full object-cover sm:h-[320px] lg:h-[420px]"
+            />
+          </div>
+        ) : null}
       </section>
 
       <section className="mt-8 grid items-start gap-8 lg:grid-cols-[1fr_290px]">
@@ -160,20 +144,9 @@ export default async function PostPage({ params }: PostPageProps) {
         </div>
 
         <aside className="flex h-fit flex-col gap-6 lg:sticky lg:top-24">
-          <div className="rounded-2xl border border-line bg-white p-5 shadow-[0_12px_28px_rgba(27,39,94,0.06)]">
+          <div className="hidden rounded-2xl border border-line bg-white p-5 shadow-[0_12px_28px_rgba(27,39,94,0.06)] lg:block">
             <h3 className="text-lg font-bold">Table of Contents</h3>
-
-            {headings.length === 0 ? (
-              <p className="mt-3 text-sm text-clay">No H2 sections found.</p>
-            ) : (
-              <nav className="mt-3 flex flex-col gap-2 border-l-2 border-[#cfd3ff] pl-3">
-                {headings.map((heading) => (
-                  <a key={heading.id} href={`#${heading.id}`} className="text-sm text-clay hover:text-ember">
-                    {heading.text}
-                  </a>
-                ))}
-              </nav>
-            )}
+            <TableOfContents headings={headings} />
           </div>
 
           <div className="rounded-xl border border-[#ead797] bg-[#fff8dc] p-4 shadow-[0_12px_28px_rgba(27,39,94,0.06)]">
@@ -190,48 +163,56 @@ export default async function PostPage({ params }: PostPageProps) {
       </section>
 
       {relatedPosts.length > 0 ? (
-        <section className="relative left-1/2 right-1/2 mt-12 w-screen -translate-x-1/2 bg-[#e7eaee] py-8 md:mt-16 md:py-10">
-          <div className="mx-auto w-[min(1600px,calc(100vw-2rem))]">
-            <div className="mb-6 flex flex-col gap-2 px-2 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="text-xs uppercase tracking-[0.16em] text-ember">Related Blogs</p>
-                <h2 className="mt-1 text-2xl font-bold md:text-3xl">Keep reading</h2>
-              </div>
-              <Link href="/" className="text-sm font-semibold text-ember hover:underline">
-                View all articles
-              </Link>
+        <section className="mt-12 rounded-2xl border border-line bg-[#e7eaee] px-5 py-8 shadow-[0_12px_28px_rgba(27,39,94,0.06)] md:mt-16 md:px-8 md:py-10">
+          <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-[0.16em] text-ember">Related Blogs</p>
+              <h2 className="mt-1 text-2xl font-bold md:text-3xl">Keep reading</h2>
             </div>
+            <Link href="/" className="text-sm font-semibold text-ember hover:underline">
+              View all articles
+            </Link>
+          </div>
 
-            <div className="grid gap-5 xl:grid-cols-3">
-              {relatedPosts.map((relatedPost) => (
-                <article
-                  key={relatedPost.slug}
-                  className="overflow-hidden rounded-[24px] border border-[#d6dbe3] bg-[#f8f7f5] shadow-[0_12px_26px_rgba(27,39,94,0.08)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(27,39,94,0.12)]"
-                >
-                  <Link href={`/${relatedPost.slug}`} className="block">
-                    <img
-                      src={relatedPost.featuredImage?.node?.sourceUrl || '/logo.jpeg'}
-                      alt={decodeHtmlEntities(relatedPost.featuredImage?.node?.altText || relatedPost.title)}
-                      className="h-[230px] w-full bg-[#e7e5ff] object-cover md:h-[265px]"
-                    />
+          <div className="grid gap-5 lg:grid-cols-3">
+            {relatedPosts.map((relatedPost) => (
+              <article
+                key={relatedPost.slug}
+                className="overflow-hidden rounded-[22px] border border-[#d6dbe3] bg-[#f8f7f5] shadow-[0_12px_26px_rgba(27,39,94,0.08)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(27,39,94,0.12)]"
+              >
+                <Link href={`/${relatedPost.slug}`} className="block">
+                  <img
+                    src={relatedPost.featuredImage?.node?.sourceUrl || '/logo.jpeg'}
+                    alt={decodeHtmlEntities(relatedPost.featuredImage?.node?.altText || relatedPost.title)}
+                    className="h-[200px] w-full bg-[#e7e5ff] object-cover md:h-[220px]"
+                  />
+                </Link>
+                <div className="flex min-h-[215px] flex-col p-5 md:p-6">
+                  <Link href={`/${relatedPost.slug}`}>
+                    <h3 className="text-lg font-semibold leading-tight text-ink md:text-xl">
+                      {decodeHtmlEntities(relatedPost.title)}
+                    </h3>
                   </Link>
-                  <div className="flex min-h-[245px] flex-col p-6">
-                    <Link href={`/${relatedPost.slug}`}>
-                      <h3 className="text-[clamp(1.5rem,1.3rem+0.4vw,2rem)] font-semibold leading-[1.25] text-ink">
-                        {decodeHtmlEntities(relatedPost.title)}
-                      </h3>
-                    </Link>
-                    <p className="mt-4 text-lg leading-8 text-clay">{excerpt(relatedPost.excerpt)}</p>
-                    <Link
-                      href={`/${relatedPost.slug}`}
-                      className="mt-auto inline-flex w-full items-center justify-center rounded-[14px] bg-butter px-6 py-4 text-xl font-semibold text-[#171717] shadow-[0_10px_18px_rgba(186,154,32,0.18)] transition hover:bg-[#ebbf32]"
-                    >
-                      Read More →
-                    </Link>
-                  </div>
-                </article>
-              ))}
-            </div>
+                  <p
+                    className="mt-2 text-sm leading-6 text-clay md:text-base"
+                    style={{
+                      display: '-webkit-box',
+                      WebkitLineClamp: 1,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden'
+                    }}
+                  >
+                    {excerpt(relatedPost.excerpt)}
+                  </p>
+                  <Link
+                    href={`/${relatedPost.slug}`}
+                    className="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-butter px-4 py-2.5 text-sm font-semibold text-[#171717] shadow-[0_10px_18px_rgba(186,154,32,0.18)] transition hover:bg-[#ebbf32]"
+                  >
+                    Read More →
+                  </Link>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
       ) : null}
