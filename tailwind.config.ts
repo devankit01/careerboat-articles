@@ -12,6 +12,10 @@ const config: Config = {
         butter: '#f2cc59',
         lilac: '#e7e5ff',
         line: '#d5d9e3'
+      },
+      fontFamily: {
+        sans: ['var(--font-figtree)'],
+        ivy: ['var(--font-ivy)'],
       }
     }
   },

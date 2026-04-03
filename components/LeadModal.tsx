@@ -1,6 +1,7 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
+import { showErrorToast, showSuccessToast, showInfoToast } from './helpers/toast';
 
 type LeadModalProps = {
   buttonLabel: string;
@@ -13,13 +14,63 @@ export default function LeadModal({ buttonLabel, className }: LeadModalProps) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [firstNameError, setFirstNameError] = useState(false);
 
   const baseurl = process.env.NEXT_PUBLIC_NODE_URL || 'http://localhost:5000';
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setOpen(false);
-    setLoading(false)
+    setEmailError(false);
+    setFirstNameError(false);
+
+    let hasError = false;
+    if (!email) {
+      setEmailError(true);
+      hasError = true;
+    }
+    if (!firstName) {
+      setFirstNameError(true);
+      hasError = true;
+    }
+
+    if (hasError) {
+      return;
+    }
+    const apiPayload = {
+      email,
+      firstName,
+      lastName,
+    };
+    try {
+      setLoading(true);
+      const res = await fetch(`${baseurl}/api/article/subscribe`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(apiPayload),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.message || "Subscription failed");
+      }
+      showSuccessToast("Success", "Subscribed Successfully");
+      setEmail("");
+      setFirstName("");
+      setLastName("");
+    } catch (error: any) {
+      console.error("Subscription Error:", error);
+      if (error?.message === "This email is already subscribed.") {
+        showInfoToast("Info", "This email is already subscribed.");
+      } else {
+        showErrorToast("Error", "Error");
+      }
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
   };
 
   return (
@@ -32,13 +83,13 @@ export default function LeadModal({ buttonLabel, className }: LeadModalProps) {
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50">
+        <div className="fixed inset-0 z-80 ">
           <button
             aria-label="Close modal"
             className="absolute inset-0 bg-black/55"
             onClick={() => setOpen(false)}
           />
-                <div className="relative mx-auto mt-[10vh] w-[min(540px,92vw)] rounded-2xl border border-line bg-white p-6 shadow-2xl">
+          <div className="relative mx-auto mt-[14vh] w-[min(540px,92vw)] rounded-2xl border border-line bg-white p-6 shadow-2xl">
             <button className="absolute right-4 top-3 text-2xl text-clay" onClick={() => setOpen(false)}>
               ×
             </button>
@@ -55,9 +106,12 @@ export default function LeadModal({ buttonLabel, className }: LeadModalProps) {
                   <input
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setEmailError(false);
+                    }}
                     placeholder="example@email.com"
-                    className="border w-full border-gray-400  rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2  focus:ring-black"
+                    className={`border w-full ${emailError ? 'border-red-500' : 'border-gray-400'} rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black`}
                   />
                 </div>
                 <div className="flex gap-2 w-full pt-6 pb-3 text-left">
@@ -68,9 +122,12 @@ export default function LeadModal({ buttonLabel, className }: LeadModalProps) {
                     <input
                       type="text"
                       value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
+                      onChange={(e) => {
+                        setFirstName(e.target.value);
+                        setFirstNameError(false);
+                      }}
                       placeholder="First Name"
-                      className="border border-gray-400 rounded-md w-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                      className={`border border-gray-400 rounded-md w-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black ${firstNameError ? 'border-red-500' : 'border-gray-400'}`}
                     />
                   </div>
                   <div>

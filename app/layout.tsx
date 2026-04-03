@@ -2,29 +2,56 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import './globals.css';
 import { FaInstagram, FaLinkedinIn, FaXTwitter, FaYoutube } from 'react-icons/fa6';
+import { Figtree } from "next/font/google";
+import localFont from 'next/font/local';
+
+export const figtree = Figtree({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-figtree",
+});
+
+export const ivy = localFont({
+  src: [
+    {
+      path: './fonts/IvyOraDisplay-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './fonts/IvyOraDisplay-RegularItalic.ttf',
+      weight: '400',
+      style: 'italic',
+    }
+  ],
+  variable: '--font-ivy',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://articles.careerboat.ai'),
-  title: 'Careerboat Blog',
-  description: 'Careerboat blog powered by WordPress GraphQL',
-icons: {
-  icon: "/purple.svg",
-  apple: "/apple-touch-icon.png",
-}
+  title: 'Careerboat Article',
+  description: 'Careerboat articles powered by WordPress GraphQL',
+  icons: {
+    icon: "/yellow.svg",
+    apple: "/apple-touch-icon.png",
+  }
 };
+
+import ToastProvider from '../components/helpers/ToastProvider';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const timeStamp = 'V-0.2.04';
-  const version = '(31-March-2026 23:00:00)';
+  const version = '(03-April-2026 13:00:00)';
   return (
     <html lang="en">
-      <body>
-        <header className="sticky top-0 z-30 border-b border-gray-50 shadow-md bg-white backdrop-blur">
+      <body className={`${figtree.variable} ${ivy.variable} font-sans`}>
+        <ToastProvider />
+        <header className="sticky top-0 z-10 border-b border-gray-50 shadow-md bg-white backdrop-blur">
           <div className="mx-auto flex w-full items-center justify-between gap-3  py-1 md:py-3">
             <div className="flex items-center gap-2 px-3 md:px-12">
               <Link href="/" className="text-indigo-600 font-bold text-lg md:text-xl flex items-center gap-2">
-                <img src="/yellow.svg" alt="Careerboat logo" className="h-12 pb-1.5" />
-               <span className='hidden md:block'> Careerboat.ai</span>
+                <img src="/yellow.svg" alt="Careerboat logo" className="h-12 pb-2" />
+                <span className='hidden md:block text-2xl'> Careerboat.ai</span>
               </Link>
             </div>
             <div className="flex items-center gap-2 md:gap-5 px-3 md:px-8" >
@@ -51,11 +78,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <footer className="bg-[#050033] text-white px-6 md:px-16 pt-10 pb-0">
           <div className="flex flex-col md:flex-row justify-between gap-10 md:pe-10">
-
             {/* Left Section */}
             <div className="max-w-sm ">
               <p className="text-sm text-gray-300 leading-relaxed">
-                Transforming how you build, track, and grow your career. Powered by AI.
+                Careerboat.ai is India’s #1 AI driven platform offering end to end career support.
               </p>
               <p className="mt-2 text-sm text-gray-300">careerboat.ai@gmail.com</p>
 
@@ -87,10 +113,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <h3 className="font-semibold mb-3">Products</h3>
                 <ul className="space-y-2 text-sm text-gray-300">
                   <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat-dev.netlify.app/" className="text-sm" target='blank'>AI Career Counselor </Link>
+                    <Link href="https://careerboat.ai/" className="text-sm" target='blank'>AI Career Counselor </Link>
                   </li>
                   <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat-dev.netlify.app/" className="text-sm" target='blank'>Chrome Extension </Link>
+                    <Link href="https://careerboat.ai/" className="text-sm" target='blank'>Chrome Extension </Link>
                   </li>
                 </ul>
               </div>
@@ -98,13 +124,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <h3 className="font-semibold mb-3">Features</h3>
                 <ul className="space-y-2 text-sm text-gray-300">
                   <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat-dev.netlify.app/" className="text-sm" target='blank'>AI Resume Builder </Link>
+                    <Link href="https://careerboat.ai/" className="text-sm" target='blank'>AI Resume Builder </Link>
                   </li>
                   <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat-dev.netlify.app/" className="text-sm" target='blank'>AI Interview Prep </Link>
+                    <Link href="https://careerboat.ai/" className="text-sm" target='blank'>AI Interview Prep </Link>
                   </li>
                   <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat-dev.netlify.app/" className="text-sm" target='blank'>Job Tracker </Link>
+                    <Link href="https://careerboat.ai/" className="text-sm" target='blank'>Job Tracker </Link>
                   </li>
                 </ul>
               </div>
@@ -127,14 +153,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
                 </li> */}
                   <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat-dev.netlify.app/about-us" className="text-sm" target='blank'>About Us</Link>
+                    <Link href="https://careerboat.ai/about-us" className="text-sm" target='blank'>About Us</Link>
 
                   </li>
                   <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat-dev.netlify.app/privacy-policy" className="text-sm" target='blank'>Privacy Policy</Link>
+                    <Link href="https://careerboat.ai/privacy-policy" className="text-sm" target='blank'>Privacy Policy</Link>
                   </li>
                   <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat-dev.netlify.app/legal-service" className="text-sm" target='blank'>Terms of Service</Link>
+                    <Link href="https://careerboat.ai/legal-service" className="text-sm" target='blank'>Terms of Service</Link>
                   </li>
                 </ul>
               </div>
@@ -145,10 +171,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="border-t border-gray-700 mt-10 mb-1 md:mb-3"></div>
 
           <div className="overflow-hidden h-[90%] relative">
-            <div className="sticky translate-y-2 md:translate-y-3">
-              <p className="text-5xl md:text-8xl font-bold bg-gradient-to-r from-[#2210e1] to-[#a37e44] bg-clip-text text-center text-transparent">
+            <div className="sticky translate-y-2 md:translate-y-5">
+              <p className="text-4xl md:text-8xl font-bold bg-gradient-to-r from-[#2210e1] to-[#a37e44] bg-clip-text text-center text-transparent">
                 Careerboat.
-                <span className="font-ivy italic text-5xl md:text-8xl font-bold">
+                <span className="font-ivy italic text-4xl md:text-8xl font-bold">
                   ai
                 </span>
               </p>

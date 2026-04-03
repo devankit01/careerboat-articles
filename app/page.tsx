@@ -20,7 +20,7 @@ export default async function HomePage() {
 
   return (
     <main>
-      <section className="mx-auto w-[min(1120px,92vw)] py-16 text-center md:py-24">
+      <section className="mx-auto w-[min(1120px,92vw)] py-16 text-center md:py-16">
         <p className="text-xs uppercase tracking-[0.16em] text-ember">Career Growth</p>
         <h1 className="mx-auto mt-3 max-w-3xl text-4xl font-bold leading-tight md:text-6xl">
           Learn practical skills that move your career forward.
@@ -31,10 +31,6 @@ export default async function HomePage() {
       </section>
 
       <section className="mx-auto w-[min(1120px,92vw)] pb-20">
-        <div className="mb-5 flex items-end justify-between gap-4">
-          <h2 className="text-2xl font-bold">Read our Articles</h2>
-        </div>
-
         {posts.length === 0 ? (
           <p className="rounded-xl border border-line bg-white p-4 text-clay">No posts found yet.</p>
         ) : (
@@ -56,6 +52,7 @@ export default async function HomePage() {
                   <div className="mt-5 flex flex-col gap-3 border-t border-line pt-4 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-sm text-clay break-words">Author : {decodeHtmlEntities(post.author?.node?.name || 'Careerboat Team')}</p>
                     <Link
+                      rel="canonical"
                       href={`/${post.slug}`}
                       className="w-fit rounded-md bg-ember px-3 py-1.5 text-sm font-semibold text-white shadow-[0_8px_18px_rgba(79,70,229,0.2)] hover:bg-[#4338ca]"
                     >
@@ -72,7 +69,7 @@ export default async function HomePage() {
           <p className="text-xs uppercase tracking-[0.16em] text-ember">Free Resource</p>
           <h3 className="mt-2 text-2xl font-bold md:text-3xl">Get your career growth checklist</h3>
           <p className="mx-auto mt-2 max-w-2xl text-clay">
-            A practical step-by-step plan to improve your profile, interview prep, and role targeting.
+            A practical step by step plan to improve your profile, interview prep, and role targeting.
           </p>
           <div className="mt-5 flex justify-center">
             <LeadModal buttonLabel="Get Free Career Checklist" className="rounded-lg bg-ember px-5 py-3 font-semibold text-white shadow-[0_10px_24px_rgba(79,70,229,0.22)] hover:bg-[#4338ca]" />
