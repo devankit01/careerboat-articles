@@ -84,7 +84,7 @@ export default async function HomePage(props: { searchParams?: { [key: string]: 
             {prevPage ? (
               <Link
                 href={`/?page=${prevPage}`}
-                className="rounded-md border border-line bg-white px-3 py-2 text-sm font-medium text-clay transition hover:bg-gray-50 sm:px-4"
+                className="rounded-md border border-indigo-600 bg-white px-3 py-2 text-sm font-medium text-indigo-600 transition sm:px-4"
               >
                 Previous
               </Link>
@@ -95,25 +95,34 @@ export default async function HomePage(props: { searchParams?: { [key: string]: 
             )}
 
             <div className="flex items-center gap-1 sm:gap-2">
-              {Array.from({ length: totalPages }).map((_, i) => {
-                const pageNum = i + 1;
-                return (
-                  <Link
-                    key={pageNum}
-                    href={`/?page=${pageNum}`}
-                    className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-md text-sm font-medium transition ${currentPage === pageNum ? 'bg-ember text-white' : 'hover:bg-gray-100 text-clay'
-                      }`}
-                  >
-                    {pageNum}
-                  </Link>
+              {(() => {
+                const pages: (number | 'dots')[] =
+                  totalPages <= 4
+                    ? Array.from({ length: totalPages }, (_, i) => i + 1)
+                    : [1, 2, 'dots', totalPages - 1, totalPages];
+
+                return pages.map((item, idx) =>
+                  item === 'dots' ? (
+                    <span key={`dots-${idx}`} className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center text-sm text-clay select-none">
+                      …
+                    </span>
+                  ) : (
+                    <Link
+                      key={item}
+                      href={`/?page=${item}`}
+                      className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-md text-sm font-medium transition ${currentPage === item ? 'bg-ember text-white' : 'hover:bg-gray-100 text-clay'}`}
+                    >
+                      {item}
+                    </Link>
+                  )
                 );
-              })}
+              })()}
             </div>
 
             {nextPage ? (
               <Link
                 href={`/?page=${nextPage}`}
-                className="rounded-md border border-line bg-white px-3 py-2 text-sm font-medium text-clay transition hover:bg-gray-50 sm:px-4"
+                className="rounded-md border border-indigo-600 bg-white px-3 py-2 text-sm font-medium text-indigo-600 transition sm:px-4"
               >
                 Next
               </Link>
