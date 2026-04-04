@@ -41,7 +41,7 @@ import ToastProvider from '../components/helpers/ToastProvider';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const timeStamp = 'V-0.2.08';
-  const version = '(04-April-2026 16:00:00)';
+  const version = '(04-April-2026 18:00:00)';
   return (
     <html lang="en">
       <body className={`${figtree.variable} ${ivy.variable} font-sans`}>
