@@ -86,11 +86,12 @@ async function wpFetch<T>(query: string, variables: Record<string, unknown> = {}
   return result.data;
 }
 
-export async function getRecentPosts(): Promise<PostCard[]> {
+export async function getRecentPosts(first: number = 100): Promise<PostCard[]> {
   try {
-    const data = await wpFetch<{ posts?: { nodes?: PostCard[] } }>(`
-      query GetRecentPosts {
-        posts(first: 9) {
+    const data = await wpFetch<{ posts?: { nodes?: PostCard[] } }>(
+      `
+      query GetRecentPosts($first: Int!) {
+        posts(first: $first) {
           nodes {
             title
             slug
@@ -109,7 +110,9 @@ export async function getRecentPosts(): Promise<PostCard[]> {
           }
         }
       }
-    `);
+    `,
+      { first }
+    );
 
     return data.posts?.nodes ?? [];
   } catch (error) {

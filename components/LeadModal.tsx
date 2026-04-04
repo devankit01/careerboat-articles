@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from 'react';
 import { showErrorToast, showSuccessToast, showInfoToast } from './helpers/toast';
+import Link from 'next/link';
 
 type LeadModalProps = {
   buttonLabel: string;
@@ -143,7 +144,7 @@ export default function LeadModal({ buttonLabel, className }: LeadModalProps) {
                     />
                   </div>
                 </div>
-                <div className="text-xs text-gray-700 text-center w-full py-4 gap-2 items-center flex"><input className="accent-indigo-600" type="checkbox" />By Subscribing you agree to our Privacy Policy</div>
+                <div className="text-xs text-gray-700 text-center w-full py-4 gap-2 items-center flex"><input className="accent-indigo-600" type="checkbox" /><span>By Subscribing you agree to our <Link href="https://careerboat.ai/privacy-policy" className="text-xs text-indigo-600 underline" target='blank'>Privacy Policy</Link></span></div>
                 <button
                   type="submit"
                   disabled={isLoading}

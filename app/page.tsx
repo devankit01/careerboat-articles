@@ -12,11 +12,23 @@ export const metadata: Metadata = {
 function excerpt(input?: string | null) {
   if (!input) return 'Read this post from Careerboat.';
   const text = stripTags(input);
-  return text.length > 125 ? `${text.slice(0, 125)}...` : text;
+  return text.length > 110 ? `${text.slice(0, 110)}...` : text;
 }
 
-export default async function HomePage() {
-  const posts = await getRecentPosts();
+export default async function HomePage(props: { searchParams?: { [key: string]: string | string[] | undefined } }) {
+  const pageParam = props.searchParams?.page;
+  const currentPage = parseInt(typeof pageParam === 'string' ? pageParam : Array.isArray(pageParam) ? pageParam[0] : '1', 10) || 1;
+  const itemsPerPage = 9;
+
+  const allPosts = await getRecentPosts(100);
+  const totalPages = Math.max(1, Math.ceil(allPosts.length / itemsPerPage));
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const posts = allPosts.slice(startIndex, endIndex);
+
+  const prevPage = currentPage > 1 ? currentPage - 1 : null;
+  const nextPage = currentPage < totalPages ? currentPage + 1 : null;
 
   return (
     <main>
@@ -44,12 +56,14 @@ export default async function HomePage() {
                     className="h-48 w-full bg-[#e7e5ff] object-cover"
                   />
                 </Link>
-                <div className="flex flex-1 flex-col p-5">
-                  <Link href={`/${post.slug}`}>
-                    <h3 className="text-xl font-semibold">{decodeHtmlEntities(post.title)}</h3>
-                  </Link>
-                  <p className="mt-2 text-clay">{excerpt(post.excerpt)}</p>
-                  <div className="mt-5 flex flex-col gap-3 border-t border-line pt-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-1 flex-col p-5 items-between justify-between ">
+                  <div>
+                    <Link href={`/${post.slug}`}>
+                      <h3 className="text-xl font-semibold">{decodeHtmlEntities(post.title)}</h3>
+                    </Link>
+                    <p className="mt-2 text-clay">{excerpt(post.excerpt)}</p>
+                  </div>
+                  <div className=" bg-red-00 mt-5 flex flex-col gap-3 border-t border-line py-2 px-4 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-sm text-clay break-words">Author : {decodeHtmlEntities(post.author?.node?.name || 'Careerboat Team')}</p>
                     <Link
                       rel="canonical"
@@ -62,6 +76,52 @@ export default async function HomePage() {
                 </div>
               </article>
             ))}
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-2 sm:gap-4">
+            {prevPage ? (
+              <Link
+                href={`/?page=${prevPage}`}
+                className="rounded-md border border-line bg-white px-3 py-2 text-sm font-medium text-clay transition hover:bg-gray-50 sm:px-4"
+              >
+                Previous
+              </Link>
+            ) : (
+              <span className="cursor-not-allowed rounded-md border border-line bg-gray-50 px-3 py-2 text-sm font-medium text-gray-400 opacity-50 sm:px-4">
+                Previous
+              </span>
+            )}
+
+            <div className="flex items-center gap-1 sm:gap-2">
+              {Array.from({ length: totalPages }).map((_, i) => {
+                const pageNum = i + 1;
+                return (
+                  <Link
+                    key={pageNum}
+                    href={`/?page=${pageNum}`}
+                    className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-md text-sm font-medium transition ${currentPage === pageNum ? 'bg-ember text-white' : 'hover:bg-gray-100 text-clay'
+                      }`}
+                  >
+                    {pageNum}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {nextPage ? (
+              <Link
+                href={`/?page=${nextPage}`}
+                className="rounded-md border border-line bg-white px-3 py-2 text-sm font-medium text-clay transition hover:bg-gray-50 sm:px-4"
+              >
+                Next
+              </Link>
+            ) : (
+              <span className="cursor-not-allowed rounded-md border border-line bg-gray-50 px-3 py-2 text-sm font-medium text-gray-400 opacity-50 sm:px-4">
+                Next
+              </span>
+            )}
           </div>
         )}
 

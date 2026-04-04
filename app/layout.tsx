@@ -40,8 +40,8 @@ export const metadata: Metadata = {
 import ToastProvider from '../components/helpers/ToastProvider';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const timeStamp = 'V-0.2.04';
-  const version = '(03-April-2026 16:00:00)';
+  const timeStamp = 'V-0.2.08';
+  const version = '(04-April-2026 16:00:00)';
   return (
     <html lang="en">
       <body className={`${figtree.variable} ${ivy.variable} font-sans`}>
@@ -141,20 +141,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <li className="hover:text-white cursor-pointer text-sm">
                     <Link
                       className="text-blueGray-600 hover:text-blueGray-800 font-normal block text-sm"
-                      // href={`${articles}`} 
                       href={"/"}
                       target='blank'
                     >
                       Articles
                     </Link>
                   </li>
-                  {/* <li className="hover:text-white cursor-pointer text-sm" >
-                  <a href="/#contact" onClick={(e) => handleNav(e, 'contact')} className='text-sm'>Contact Us</a>
-
-                </li> */}
                   <li className="hover:text-white cursor-pointer text-sm">
                     <Link href="https://careerboat.ai/about-us" className="text-sm" target='blank'>About Us</Link>
-
                   </li>
                   <li className="hover:text-white cursor-pointer text-sm">
                     <Link href="https://careerboat.ai/privacy-policy" className="text-sm" target='blank'>Privacy Policy</Link>
