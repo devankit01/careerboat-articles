@@ -73,7 +73,7 @@ export default async function PostPage({ params }: PostPageProps) {
   const contentWithIds = injectH2Ids(rawContent, headings);
   const tldrBlock = tldr?.content
     ? `
-      <div class="not-prose mb-6 rounded-2xl border border-[#cfd3ff] bg-[#e9e8ff] p-4 md:p-5">
+      <div class="not-prose mb-6 mt-6 rounded-2xl border border-[#cfd3ff] bg-[#e9e8ff] p-4 md:p-5">
         <h3 class="tldr-label">TL;DR</h3>
         <div class="tldr-prose prose-content mt-0">${tldr.content}</div>
       </div>
@@ -108,19 +108,20 @@ export default async function PostPage({ params }: PostPageProps) {
         </div>
 
         {post.featuredImage?.node?.sourceUrl ? (
-          <div className="mt-4 overflow-hidden rounded-2xl border border-line bg-[#f8faff]">
+          <div className="mt-4 overflow-hidden">
             <img
               src={post.featuredImage.node.sourceUrl}
               alt={decodeHtmlEntities(post.featuredImage.node.altText || postTitle)}
-              className="h-[240px] w-full object-cover sm:h-[320px] lg:h-[420px]"
+              className="w-full max-w-5xl h-[160px] md:h-[580px] mx-auto object-cover rounded-2xl shadow-sm"
+
             />
           </div>
         ) : null}
       </section>
 
       <section className="mt-8 grid items-start gap-8 lg:grid-cols-[1fr_290px]">
-        <div className="min-w-0 space-y-8">
-          <article className="rounded-2xl border border-line bg-white p-5 shadow-[0_12px_28px_rgba(27,39,94,0.06)] md:p-7">
+        <div className="min-w-0 space-y-8 ">
+          <article className="rounded-2xl border border-line bg-white px-5  pb-5 shadow-[0_12px_28px_rgba(27,39,94,0.06)] md:p-7 md:pt-0">
             <div className="prose-content" dangerouslySetInnerHTML={{ __html: contentWithExtras }} />
 
             {faqs.length > 0 ? (
@@ -140,7 +141,6 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
             ) : null}
           </article>
-
         </div>
 
         <aside className="flex h-fit flex-col gap-6 lg:sticky lg:top-24">
