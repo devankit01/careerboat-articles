@@ -1,7 +1,9 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import LeadModal from '@/components/LeadModal';
 import { decodeHtmlEntities, getRecentPosts, stripTags } from '@/lib/wp';
+import Loading from './loading';
 
 export const metadata: Metadata = {
   alternates: {
@@ -15,20 +17,163 @@ function excerpt(input?: string | null) {
   return text.length > 110 ? `${text.slice(0, 110)}...` : text;
 }
 
-export default async function HomePage(props: { searchParams?: { [key: string]: string | string[] | undefined } }) {
-  const pageParam = props.searchParams?.page;
-  const currentPage = parseInt(typeof pageParam === 'string' ? pageParam : Array.isArray(pageParam) ? pageParam[0] : '1', 10) || 1;
+/* Skeleton*/
+
+function CardSkeleton() {
+  return (
+    <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-[0_12px_28px_rgba(27,39,94,0.06)]">
+      {/* Thumbnail */}
+      <div className="skeleton h-48 w-full" style={{ borderRadius: 0 }} />
+
+      {/* Body */}
+      <div className="flex flex-1 flex-col p-5">
+        {/* Title */}
+        <div className="skeleton h-5 w-4/5 rounded-md" />
+        <div className="skeleton mt-2 h-5 w-3/5 rounded-md" />
+
+        {/* Excerpt */}
+        <div className="mt-3 flex flex-col gap-2">
+          <div className="skeleton h-4 w-full rounded" />
+          <div className="skeleton h-4 w-full rounded" />
+          <div className="skeleton h-4 w-2/3 rounded" />
+        </div>
+
+        {/* Footer strip */}
+        <div className="mt-auto flex flex-col gap-3 border-t border-line px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="skeleton h-4 w-32 rounded" />
+          <div className="skeleton h-8 w-24 rounded-md" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PostsGridSkeleton() {
+  return (
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {Array.from({ length: 9 }).map((_, i) => (
+        // <CardSkeleton key={i} />
+        <Loading key={i} />
+      ))}
+    </div>
+  );
+}
+
+
+async function PostsGrid({ currentPage }: { currentPage: number }) {
   const itemsPerPage = 9;
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   const allPosts = await getRecentPosts(100);
   const totalPages = Math.max(1, Math.ceil(allPosts.length / itemsPerPage));
 
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const posts = allPosts.slice(startIndex, endIndex);
+  const posts = allPosts.slice(startIndex, startIndex + itemsPerPage);
 
   const prevPage = currentPage > 1 ? currentPage - 1 : null;
   const nextPage = currentPage < totalPages ? currentPage + 1 : null;
+
+  return (
+    <>
+      {posts.length === 0 ? (
+        <p className="rounded-xl border border-line bg-white p-4 text-clay">No posts found yet.</p>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <article key={post.slug} className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-[0_12px_28px_rgba(27,39,94,0.06)] transition hover:-translate-y-0.5">
+              <Link href={`/${post.slug}`} className="block">
+                <img
+                  src={post.featuredImage?.node?.sourceUrl || '/logo.jpeg'}
+                  alt={decodeHtmlEntities(post.featuredImage?.node?.altText || post.title)}
+                  className="h-48 w-full bg-[#e7e5ff] object-cover"
+                />
+              </Link>
+              <div className="flex flex-1 flex-col p-5 items-between justify-between">
+                <div>
+                  <Link href={`/${post.slug}`}>
+                    <h3 className="text-xl font-semibold">{decodeHtmlEntities(post.title)}</h3>
+                  </Link>
+                  <p className="mt-2 text-clay">{excerpt(post.excerpt)}</p>
+                </div>
+                <div className="mt-5 flex flex-col gap-3 border-t border-line py-2 px-4 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-sm text-clay break-words">Author : {decodeHtmlEntities(post.author?.node?.name || 'Careerboat Team')}</p>
+                  <Link
+                    rel="canonical"
+                    href={`/${post.slug}`}
+                    className="w-fit rounded-md bg-ember px-3 py-1.5 text-sm font-semibold text-white shadow-[0_8px_18px_rgba(79,70,229,0.2)] hover:bg-[#4338ca]"
+                  >
+                    Read Post
+                  </Link>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+
+      {totalPages > 1 && (
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-2 sm:gap-4">
+          {prevPage ? (
+            <Link
+              href={`/?page=${prevPage}`}
+              className="rounded-md border border-indigo-600 bg-white px-3 py-2 text-sm font-medium text-indigo-600 transition sm:px-4"
+            >
+              Previous
+            </Link>
+          ) : (
+            <span className="cursor-not-allowed rounded-md border border-line bg-gray-50 px-3 py-2 text-sm font-medium text-gray-400 opacity-50 sm:px-4">
+              Previous
+            </span>
+          )}
+
+          <div className="flex items-center gap-1 sm:gap-2">
+            {(() => {
+              const pages: (number | 'dots')[] =
+                totalPages <= 4
+                  ? Array.from({ length: totalPages }, (_, i) => i + 1)
+                  : [1, 2, 'dots', totalPages - 1, totalPages];
+
+              return pages.map((item, idx) =>
+                item === 'dots' ? (
+                  <span key={`dots-${idx}`} className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center text-sm text-clay select-none">
+                    …
+                  </span>
+                ) : (
+                  <Link
+                    key={item}
+                    href={`/?page=${item}`}
+                    className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-md text-sm font-medium transition ${currentPage === item ? 'bg-ember text-white' : 'hover:bg-gray-100 text-clay'}`}
+                  >
+                    {item}
+                  </Link>
+                )
+              );
+            })()}
+          </div>
+
+          {nextPage ? (
+            <Link
+              href={`/?page=${nextPage}`}
+              className="rounded-md border border-indigo-600 bg-white px-3 py-2 text-sm font-medium text-indigo-600 transition sm:px-4"
+            >
+              Next
+            </Link>
+          ) : (
+            <span className="cursor-not-allowed rounded-md border border-line bg-gray-50 px-3 py-2 text-sm font-medium text-gray-400 opacity-50 sm:px-4">
+              Next
+            </span>
+          )}
+        </div>
+      )}
+    </>
+  );
+}
+
+/* Page */
+
+export default function HomePage(props: { searchParams?: { [key: string]: string | string[] | undefined } }) {
+  const pageParam = props.searchParams?.page;
+  const currentPage = parseInt(typeof pageParam === 'string' ? pageParam : Array.isArray(pageParam) ? pageParam[0] : '1', 10) || 1;
 
   return (
     <main>
@@ -43,96 +188,9 @@ export default async function HomePage(props: { searchParams?: { [key: string]: 
       </section>
 
       <section className="mx-auto w-[min(1120px,92vw)] pb-20">
-        {posts.length === 0 ? (
-          <p className="rounded-xl border border-line bg-white p-4 text-clay">No posts found yet.</p>
-        ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post) => (
-              <article key={post.slug} className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-[0_12px_28px_rgba(27,39,94,0.06)] transition hover:-translate-y-0.5">
-                <Link href={`/${post.slug}`} className="block">
-                  <img
-                    src={post.featuredImage?.node?.sourceUrl || '/logo.jpeg'}
-                    alt={decodeHtmlEntities(post.featuredImage?.node?.altText || post.title)}
-                    className="h-48 w-full bg-[#e7e5ff] object-cover"
-                  />
-                </Link>
-                <div className="flex flex-1 flex-col p-5 items-between justify-between ">
-                  <div>
-                    <Link href={`/${post.slug}`}>
-                      <h3 className="text-xl font-semibold">{decodeHtmlEntities(post.title)}</h3>
-                    </Link>
-                    <p className="mt-2 text-clay">{excerpt(post.excerpt)}</p>
-                  </div>
-                  <div className=" bg-red-00 mt-5 flex flex-col gap-3 border-t border-line py-2 px-4 sm:flex-row sm:items-center sm:justify-between">
-                    <p className="text-sm text-clay break-words">Author : {decodeHtmlEntities(post.author?.node?.name || 'Careerboat Team')}</p>
-                    <Link
-                      rel="canonical"
-                      href={`/${post.slug}`}
-                      className="w-fit rounded-md bg-ember px-3 py-1.5 text-sm font-semibold text-white shadow-[0_8px_18px_rgba(79,70,229,0.2)] hover:bg-[#4338ca]"
-                    >
-                      Read Post
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        )}
-
-        {totalPages > 1 && (
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-2 sm:gap-4">
-            {prevPage ? (
-              <Link
-                href={`/?page=${prevPage}`}
-                className="rounded-md border border-indigo-600 bg-white px-3 py-2 text-sm font-medium text-indigo-600 transition sm:px-4"
-              >
-                Previous
-              </Link>
-            ) : (
-              <span className="cursor-not-allowed rounded-md border border-line bg-gray-50 px-3 py-2 text-sm font-medium text-gray-400 opacity-50 sm:px-4">
-                Previous
-              </span>
-            )}
-
-            <div className="flex items-center gap-1 sm:gap-2">
-              {(() => {
-                const pages: (number | 'dots')[] =
-                  totalPages <= 4
-                    ? Array.from({ length: totalPages }, (_, i) => i + 1)
-                    : [1, 2, 'dots', totalPages - 1, totalPages];
-
-                return pages.map((item, idx) =>
-                  item === 'dots' ? (
-                    <span key={`dots-${idx}`} className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center text-sm text-clay select-none">
-                      …
-                    </span>
-                  ) : (
-                    <Link
-                      key={item}
-                      href={`/?page=${item}`}
-                      className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-md text-sm font-medium transition ${currentPage === item ? 'bg-ember text-white' : 'hover:bg-gray-100 text-clay'}`}
-                    >
-                      {item}
-                    </Link>
-                  )
-                );
-              })()}
-            </div>
-
-            {nextPage ? (
-              <Link
-                href={`/?page=${nextPage}`}
-                className="rounded-md border border-indigo-600 bg-white px-3 py-2 text-sm font-medium text-indigo-600 transition sm:px-4"
-              >
-                Next
-              </Link>
-            ) : (
-              <span className="cursor-not-allowed rounded-md border border-line bg-gray-50 px-3 py-2 text-sm font-medium text-gray-400 opacity-50 sm:px-4">
-                Next
-              </span>
-            )}
-          </div>
-        )}
+        <Suspense fallback={<PostsGridSkeleton />}>
+          <PostsGrid currentPage={currentPage} />
+        </Suspense>
 
         <div className="mt-10 rounded-2xl border border-[#cfd3ff] bg-[#e9e8ff] p-6 text-center md:p-8">
           <p className="text-xs uppercase tracking-[0.16em] text-ember">Free Resource</p>

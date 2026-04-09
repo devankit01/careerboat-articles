@@ -54,12 +54,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <span className='hidden md:block text-2xl'> Careerboat.ai</span>
               </Link>
             </div>
-            <div className="flex items-center gap-2 md:gap-5 px-3 md:px-8" >
+            <div className="flex items-center gap-2 md:gap-5 px-3 md:px-8 " >
               <a
                 href="https://careerboat.ai"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full bg-[#4f47e5] px-5  py-1.5 md:py-2.5 text-sm font-semibold text-white hover:bg-[#3e36c9]"
+                className="rounded-full bg-[#4f47e5] px-5 md:px-7  py-1.5 md:py-2.5 text-sm font-semibold text-white hover:bg-[#3e36c9]"
               >
                 Explore
               </a>
