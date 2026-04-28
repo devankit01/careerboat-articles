@@ -40,18 +40,18 @@ export const metadata: Metadata = {
 import ToastProvider from '../components/helpers/ToastProvider';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const timeStamp = 'V-0.2.10';
-  const version = '(09-April-2026 18:00:00)';
+  const timeStamp = 'V-0.2.12';
+  const version = '(28-April-2026 02:00:00)';
   return (
     <html lang="en">
       <body className={`${figtree.variable} ${ivy.variable} font-sans`}>
         <ToastProvider />
         <header className="sticky top-0 z-10 border-b border-gray-50 shadow-md bg-white backdrop-blur">
-          <div className="mx-auto flex w-full items-center justify-between gap-3  py-1 md:py-3">
+          <div className="mx-auto flex w-full items-center justify-between gap-3  py-1 md:py-2">
             <div className="flex items-center gap-2 px-3 md:px-12">
-              <Link href="/" className="text-indigo-600 font-bold text-lg md:text-xl flex items-center gap-2">
-                <img src="/yellow.svg" alt="Careerboat logo" className="h-12 pb-2" />
-                <span className='hidden md:block text-2xl'> Careerboat.ai</span>
+              <Link href="/" className="text-indigo-600 cursor-pointer flex items-center gap-2">
+                <img src="/yellow.svg" alt="Careerboat logo" className="h-12 pb-2 block md:hidden" />
+                <img src="/mainLogo.svg" alt="Careerboat Logo" className="h-14 hidden md:block" />
               </Link>
             </div>
             <div className="flex items-center gap-2 md:gap-5 px-3 md:px-8 " >
@@ -83,7 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <p className="text-sm text-gray-300 leading-relaxed">
                 Careerboat.ai is India’s #1 AI driven platform offering end to end career support.
               </p>
-              <p className="mt-2 text-sm text-gray-300">careerboat.ai@gmail.com</p>
+              <p className="mt-2 text-sm text-gray-300">support@careerboat.ai</p>
 
               <p className="mt-2 text-xs text-gray-300">All rights reserved © 2026 Careerboat.ai Pvt. Ltd.</p>
 
