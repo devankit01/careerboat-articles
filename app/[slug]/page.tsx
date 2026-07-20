@@ -204,6 +204,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   >
                     {excerpt(relatedPost.excerpt)}
                   </p>
+                  
                   <Link
                     href={`/${relatedPost.slug}`}
                     className="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-butter px-4 py-2.5 text-sm font-semibold text-[#171717] shadow-[0_10px_18px_rgba(186,154,32,0.18)] transition hover:bg-[#ebbf32]"
