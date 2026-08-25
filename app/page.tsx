@@ -33,6 +33,8 @@ async function PostsGrid({ currentPage }: { currentPage: number }) {
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
   const allPosts = await getRecentPosts(100);
+  console.log(allPosts)
+  // console.log("API Response (allPosts):", JSON.stringify(allPosts[0], null, 2)); // Logging the first post for brevity, or remove [0] for all
   const totalPages = Math.max(1, Math.ceil(allPosts.length / itemsPerPage));
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -153,7 +155,26 @@ export default function HomePage(props: { searchParams?: { [key: string]: string
         <p className="mx-auto mt-4 max-w-2xl text-lg text-clay">
           Actionable writing on resumes, interviews, and role transitions from beginner to senior levels.
         </p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          {['All', 'Resumes', 'Interviews', 'Networking', 'Negotiation', 'Leadership', 'Productivity'].map((category) => {
+            const categorySlug = category.toLowerCase();
+            const isSelected = (props.searchParams?.category || 'all') === categorySlug;
+            return (
+              <Link
+                key={category}
+                href={categorySlug === 'all' ? '/' : `/?category=${categorySlug}`}
+                className={`rounded-full border px-4 py-1.5 text-sm font-medium shadow-sm transition-all hover:-translate-y-0.5 ${isSelected
+                    ? 'border-ember bg-ember text-white'
+                    : 'border-line bg-white text-clay hover:border-ember hover:text-ember'
+                  }`}
+              >
+                {category}
+              </Link>
+            );
+          })}
+        </div>
       </section>
+
 
       <section className="mx-auto w-[min(1120px,92vw)] pb-20">
         <Suspense fallback={<PostsGridSkeleton />}>
