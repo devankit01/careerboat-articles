@@ -28,17 +28,32 @@ function PostsGridSkeleton() {
 }
 
 
-async function PostsGrid({ currentPage }: { currentPage: number }) {
+function getCategoryFromTitle(title: string): string {
+  const lowerTitle = title.toLowerCase();
+  if (lowerTitle.includes('resume') || lowerTitle.includes('cv')) return 'resumes';
+  if (lowerTitle.includes('interview')) return 'interviews';
+  if (lowerTitle.includes('network') || lowerTitle.includes('linkedin') || lowerTitle.includes('connection') || lowerTitle.includes('referral')) return 'networking';
+  if (lowerTitle.includes('negotiat') || lowerTitle.includes('offer') || lowerTitle.includes('salary')) return 'negotiation';
+  if (lowerTitle.includes('lead') || lowerTitle.includes('manag') || lowerTitle.includes('director') || lowerTitle.includes('senior')) return 'leadership';
+  if (lowerTitle.includes('productiv') || lowerTitle.includes('time') || lowerTitle.includes('habit')) return 'productivity';
+  if (lowerTitle.includes('career')) return 'career';
+  return 'other';
+}
+
+async function PostsGrid({ currentPage, currentCategory }: { currentPage: number; currentCategory: string }) {
   const itemsPerPage = 9;
-  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   const allPosts = await getRecentPosts(100);
-  console.log(allPosts)
-  // console.log("API Response (allPosts):", JSON.stringify(allPosts[0], null, 2)); // Logging the first post for brevity, or remove [0] for all
-  const totalPages = Math.max(1, Math.ceil(allPosts.length / itemsPerPage));
+
+  let filteredPosts = allPosts;
+  if (currentCategory !== 'all') {
+    filteredPosts = allPosts.filter((post) => getCategoryFromTitle(post.title) === currentCategory);
+  }
+
+  const totalPages = Math.max(1, Math.ceil(filteredPosts.length / itemsPerPage));
 
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const posts = allPosts.slice(startIndex, startIndex + itemsPerPage);
+  const posts = filteredPosts.slice(startIndex, startIndex + itemsPerPage);
 
   const prevPage = currentPage > 1 ? currentPage - 1 : null;
   const nextPage = currentPage < totalPages ? currentPage + 1 : null;
@@ -144,6 +159,8 @@ async function PostsGrid({ currentPage }: { currentPage: number }) {
 export default function HomePage(props: { searchParams?: { [key: string]: string | string[] | undefined } }) {
   const pageParam = props.searchParams?.page;
   const currentPage = parseInt(typeof pageParam === 'string' ? pageParam : Array.isArray(pageParam) ? pageParam[0] : '1', 10) || 1;
+  const categoryParam = props.searchParams?.category;
+  const currentCategory = typeof categoryParam === 'string' ? categoryParam : 'all';
 
   return (
     <main>
@@ -156,16 +173,16 @@ export default function HomePage(props: { searchParams?: { [key: string]: string
           Actionable writing on resumes, interviews, and role transitions from beginner to senior levels.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          {['All', 'Resumes', 'Interviews', 'Networking', 'Negotiation', 'Leadership', 'Productivity'].map((category) => {
+          {['All', 'Resumes', 'Interviews', 'Networking', 'Negotiation', 'Leadership', 'Productivity', "Career", "other"].map((category) => {
             const categorySlug = category.toLowerCase();
-            const isSelected = (props.searchParams?.category || 'all') === categorySlug;
+            const isSelected = currentCategory === categorySlug;
             return (
               <Link
                 key={category}
                 href={categorySlug === 'all' ? '/' : `/?category=${categorySlug}`}
                 className={`rounded-full border px-4 py-1.5 text-sm font-medium shadow-sm transition-all hover:-translate-y-0.5 ${isSelected
-                    ? 'border-ember bg-ember text-white'
-                    : 'border-line bg-white text-clay hover:border-ember hover:text-ember'
+                  ? 'border-ember bg-ember text-white'
+                  : 'border-line bg-white text-clay hover:border-ember hover:text-ember'
                   }`}
               >
                 {category}
@@ -178,7 +195,7 @@ export default function HomePage(props: { searchParams?: { [key: string]: string
 
       <section className="mx-auto w-[min(1120px,92vw)] pb-20">
         <Suspense fallback={<PostsGridSkeleton />}>
-          <PostsGrid currentPage={currentPage} />
+          <PostsGrid currentPage={currentPage} currentCategory={currentCategory} />
         </Suspense>
 
         <div className="mt-10 rounded-2xl border border-[#cfd3ff] bg-[#e9e8ff] p-6 text-center md:p-8">
