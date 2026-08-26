@@ -58,6 +58,10 @@ async function PostsGrid({ currentPage, currentCategory }: { currentPage: number
   const prevPage = currentPage > 1 ? currentPage - 1 : null;
   const nextPage = currentPage < totalPages ? currentPage + 1 : null;
 
+  const getPageHref = (page: number) => {
+    return currentCategory === 'all' ? `/?page=${page}` : `/?category=${currentCategory}&page=${page}`;
+  };
+
   return (
     <>
       {posts.length === 0 ? (
@@ -100,7 +104,7 @@ async function PostsGrid({ currentPage, currentCategory }: { currentPage: number
         <div className="mt-12 flex flex-wrap items-center justify-center gap-2 sm:gap-4">
           {prevPage ? (
             <Link
-              href={`/?page=${prevPage}`}
+              href={getPageHref(prevPage)}
               className="rounded-md border border-indigo-600 bg-white px-3 py-2 text-sm font-medium text-indigo-600 transition sm:px-4"
             >
               Previous
@@ -126,7 +130,7 @@ async function PostsGrid({ currentPage, currentCategory }: { currentPage: number
                 ) : (
                   <Link
                     key={item}
-                    href={`/?page=${item}`}
+                    href={getPageHref(item as number)}
                     className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-md text-sm font-medium transition ${currentPage === item ? 'bg-ember text-white' : 'hover:bg-gray-100 text-clay'}`}
                   >
                     {item}
@@ -138,7 +142,7 @@ async function PostsGrid({ currentPage, currentCategory }: { currentPage: number
 
           {nextPage ? (
             <Link
-              href={`/?page=${nextPage}`}
+              href={getPageHref(nextPage)}
               className="rounded-md border border-indigo-600 bg-white px-3 py-2 text-sm font-medium text-indigo-600 transition sm:px-4"
             >
               Next
@@ -165,14 +169,14 @@ export default function HomePage(props: { searchParams?: { [key: string]: string
   return (
     <main>
       <section className="mx-auto w-[min(1120px,92vw)] py-16 text-center md:py-16">
-        <p className="text-xs uppercase tracking-[0.16em] text-ember">Career Growth</p>
-        <h1 className="mx-auto mt-3 max-w-3xl text-4xl font-bold leading-tight md:text-6xl">
+        {/* <p className="text-xs uppercase tracking-[0.16em] text-ember">Career Growth</p> */}
+        <h1 className="mx-auto mt-3 max-w-3xl text-3xl font-bold leading-tight md:text-6xl">
           Learn practical skills that move your career forward.
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-clay">
           Actionable writing on resumes, interviews, and role transitions from beginner to senior levels.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <div className="mt-8 md:mt-16 flex flex-wrap justify-center gap-3">
           {['All', 'Resumes', 'Interviews', 'Networking', 'Negotiation', 'Leadership', 'Productivity', "Career", "other"].map((category) => {
             const categorySlug = category.toLowerCase();
             const isSelected = currentCategory === categorySlug;
@@ -180,9 +184,9 @@ export default function HomePage(props: { searchParams?: { [key: string]: string
               <Link
                 key={category}
                 href={categorySlug === 'all' ? '/' : `/?category=${categorySlug}`}
-                className={`rounded-full border px-4 py-1.5 text-sm font-medium shadow-sm transition-all hover:-translate-y-0.5 ${isSelected
+                className={`rounded-full border px-4 py-1.5 min-w-20  text-sm font-semibold shadow-md transition-all hover:-translate-y-0.5 ${isSelected
                   ? 'border-ember bg-ember text-white'
-                  : 'border-line bg-white text-clay hover:border-ember hover:text-ember'
+                  : 'border-line border-gray-700 bg-white text-clay hover:border-ember text-gray-800 hover:text-ember '
                   }`}
               >
                 {category}
