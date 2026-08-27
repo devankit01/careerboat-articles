@@ -116,7 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <Link href="https://careerboat.ai/" className="text-sm" target='blank'>AI Career Counselor </Link>
                   </li>
                   <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat.ai/" className="text-sm" target='blank'>Chrome Extension </Link>
+                    <Link href="https://careerboat.ai/chrome-extension" className="text-sm" target='blank'>Chrome Extension </Link>
                   </li>
                 </ul>
               </div>
@@ -124,13 +124,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <h3 className="font-semibold mb-3">Features</h3>
                 <ul className="space-y-2 text-sm text-gray-300">
                   <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat.ai/" className="text-sm" target='blank'>AI Resume Builder </Link>
+                    <Link href="https://careerboat.ai/resume-builder" className="text-sm" target='blank'>AI Resume Builder </Link>
                   </li>
                   <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat.ai/" className="text-sm" target='blank'>AI Interview Prep </Link>
+                    <Link href="https://careerboat.ai/ai-interview-prep" className="text-sm" target='blank'>AI Interview Prep </Link>
                   </li>
                   <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat.ai/" className="text-sm" target='blank'>Job Tracker </Link>
+                    <Link href="https://careerboat.ai/job-tracker" className="text-sm" target='blank'>Job Tracker </Link>
                   </li>
                 </ul>
               </div>
@@ -138,15 +138,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div className=''>
                 <h3 className="font-semibold mb-3">More About</h3>
                 <ul className="space-y-2 text-sm text-gray-300">
-                  <li className="hover:text-white cursor-pointer text-sm">
-                    <Link
-                      className="text-blueGray-600 hover:text-blueGray-800 font-normal block text-sm"
-                      href={"/"}
-                      target='blank'
-                    >
-                      Articles
-                    </Link>
-                  </li>
                   <li className="hover:text-white cursor-pointer text-sm">
                     <Link href="https://careerboat.ai/about-us" className="text-sm" target='blank'>About Us</Link>
                   </li>
