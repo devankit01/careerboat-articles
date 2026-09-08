@@ -40,8 +40,8 @@ export const metadata: Metadata = {
 import ToastProvider from '../components/helpers/ToastProvider';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const timeStamp = 'V-0.2.12';
-  const version = '(26-08-2026 02:00:00)';
+  const timeStamp = 'V-0.2.18';
+  const version = '(08-09-2026 02:00:00)';
   return (
     <html lang="en">
       <body className={`${figtree.variable} ${ivy.variable} font-sans`}>
