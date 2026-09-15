@@ -475,7 +475,7 @@ export function rewriteWpPermalinks(html: string) {
   return html
     .replace(
       /https?:\/\/red-tiger-788578\.hostingersite\.com\/wp-content\//gi,
-      '/blog/wp-media/'
+      '/wp-media/'
     )
     .replace(
       /https?:\/\/red-tiger-788578\.hostingersite\.com\/(?!wp-includes\/|wp-json\/|wp-admin\/|graphql)([^"'\s]*)/gi,
@@ -490,7 +490,7 @@ export function publicMediaPath(url?: string | null) {
   if (!url) return undefined;
   if (url.startsWith('/')) return url;
   const rewritten = rewriteWpPermalinks(url);
-  return rewritten.startsWith('/blog/wp-media/') ? rewritten : undefined;
+  return rewritten.startsWith('/wp-media/') ? rewritten : undefined;
 }
 
 export function publicMediaUrl(url?: string | null) {
@@ -500,7 +500,7 @@ export function publicMediaUrl(url?: string | null) {
 }
 
 export function coverSrc(url?: string | null) {
-  return publicMediaPath(url) || '/blog/logo.jpeg';
+  return publicMediaPath(url) || '/logo.jpeg';
 }
 
 export function extractH2(content: string): Array<{ id: string; text: string }> {

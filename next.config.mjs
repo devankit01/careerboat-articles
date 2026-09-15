@@ -1,12 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    remotePatterns: [
+  basePath: "/blog",
+  experimental: {
+    cpus: 1
+  },
+  async rewrites() {
+    return [
       {
-        protocol: 'https',
-        hostname: 'red-tiger-788578.hostingersite.com'
+        source: '/wp-media/:path*',
+        destination: 'https://red-tiger-788578.hostingersite.com/wp-content/:path*'
       }
-    ]
+    ];
   }
 };
 

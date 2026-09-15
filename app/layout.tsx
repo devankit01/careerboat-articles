@@ -5,13 +5,13 @@ import { FaInstagram, FaLinkedinIn, FaXTwitter, FaYoutube } from 'react-icons/fa
 import { Figtree } from "next/font/google";
 import localFont from 'next/font/local';
 
-export const figtree = Figtree({
+const figtree = Figtree({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-figtree",
 });
 
-export const ivy = localFont({
+const ivy = localFont({
   src: [
     {
       path: './fonts/IvyOraDisplay-Regular.woff2',
@@ -29,11 +29,19 @@ export const ivy = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://articles.careerboat.ai'),
-  title: 'Careerboat Article',
-  description: 'Careerboat articles powered by WordPress GraphQL',
+  title: {
+    default: 'Career Articles & Career Advice | Careerboat',
+    template: '%s'
+  },
+  description: 'Actionable writing on resumes, interviews, and role transitions from beginner to senior levels.',
+  openGraph: {
+    type: 'website',
+    siteName: 'Careerboat Articles',
+    locale: 'en_US'
+  },
   icons: {
-    icon: "/yellow.svg",
-    apple: "/apple-touch-icon.png",
+    icon: "/blog/yellow.svg",
+    apple: "/blog/apple-touch-icon.png",
   }
 };
 
@@ -50,8 +58,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="mx-auto flex w-full items-center justify-between gap-3  py-1 md:py-2">
             <div className="flex items-center gap-2 px-3 md:px-12">
               <Link href="/" className="text-indigo-600 cursor-pointer flex items-center gap-2">
-                <img src="/yellow.svg" alt="Careerboat logo" className="h-12 pb-2 block md:hidden" />
-                <img src="/mainLogo.svg" alt="Careerboat Logo" className="h-14 hidden md:block" />
+                <img src="/blog/yellow.svg" alt="Careerboat logo" className="h-12 pb-2 block md:hidden" />
+                <img src="/blog/mainLogo.svg" alt="Careerboat Logo" className="h-14 hidden md:block" />
               </Link>
             </div>
             <div className="flex items-center gap-2 md:gap-5 px-3 md:px-8 " >
