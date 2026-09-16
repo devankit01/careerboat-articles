@@ -70,15 +70,7 @@ function getCategoryFromTitle(title: string): string {
   if (lowerTitle.includes('career')) return 'career';
   return 'other';
 }
-// async function PostsGrid({ currentPage }: { currentPage: number }) {
-//   const allPosts = await getRecentPosts(100);
-//   const totalPages = Math.max(1, Math.ceil(allPosts.length / ITEMS_PER_PAGE));
 
-//   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-//   const posts = allPosts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-
-//   const prevPage = currentPage > 1 ? currentPage - 1 : null;
-//   const nextPage = currentPage < totalPages ? currentPage + 1 : null;
 async function PostsGrid({ currentPage, currentCategory }: { currentPage: number; currentCategory: string }) {
   const itemsPerPage = 9;
 

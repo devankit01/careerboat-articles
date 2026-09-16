@@ -86,99 +86,296 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
         {children}
 
-        <footer className="bg-[#050033] text-white px-6 md:px-16 pt-10 pb-0">
-          <div className="flex flex-col md:flex-row justify-between gap-10 md:pe-10">
-            {/* Left Section */}
-            <div className="max-w-sm ">
-              <p className="text-sm text-gray-300 leading-relaxed">
-                Careerboat.ai is India’s #1 AI driven platform offering end to end career support.
-              </p>
-              <p className="mt-2 text-sm text-gray-300">support@careerboat.ai</p>
+        <footer className="text-white px-6 md:px-12 pt-10 pb-0"
+          style={{
+            background: `
+      radial-gradient(circle at 0% 0%, #e3e2f1 0%, transparent 30%),
+      radial-gradient(circle at 0% 100%, #5a54c4 0%, transparent 40%),
+      radial-gradient(circle at 100% 0%, #f2efe8 0%, transparent 30%),
+      radial-gradient(circle at 100% 100%, #e0b85c 0%, transparent 40%),
+      #e5e7eb
+    ` }} >
+          <div className=" mx-auto ">
+            {/* Main Footer */}
+            <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_2fr] gap-16 lg:gap-24 ">
+              {/* LEFT / BRAND SECTION */}
+              <div className="max-w-xl">
+                <div className="relative h-[105px] md:h-[125px]">
+                  <span className="absolute text-[#4f47e5]  left-0 bottom-10 md:bottom-6 text-3xl md:text-4xl lg:text-5xl font-semibold tracking-[-0.05em] leading-none whitespace-nowrap">
+                    Fresher got
+                  </span>
+                  <div className="absolute text-[#4f47e5]  left-[165px] md:left-[210px] lg:left-[235px] top-0">
+                    <div className="text-3xl md:text-4xl font-ivy italic md:pl-5 lg:text-5xl font-bold tracking-[-0.01em] leading-none">
+                      hired.
+                    </div>
+                    <div className="relative text-3xl font-ivy italic md:text-4xl lg:text-5xl font-semibold text-gray-400 tracking-[-0.05em] leading-none mt-1 w-fit">
+                      ghosted
+                      <span className="absolute left-0 right-0 top-[58%] md:h-[4px] bg-gray-600 -translate-y-1/2" />
+                    </div>
+                  </div>
+                </div>
 
-              <p className="mt-2 text-xs text-gray-300">All rights reserved © 2026 Careerboat.ai Pvt. Ltd.</p>
+                {/* Description */}
+                <p className="text-sm text-gray-800 leading-relaxed max-w-md md:mt-3">
+                  Careerboat.ai is an AI career platform built for Indian students and freshers.
+                  From building your resume to getting hired, it's your AI career coach in your pocket. Trusted by
+                  <span className="text-[#4f47e5] font-bold"> 100K+ </span>users.
+                </p>
+                <p className="text-sm text-gray-800 leading-relaxed max-w-md mt-5 font-semibold">
+                  Careerboat.ai Private Limited
+                </p>
+                <p className="text-sm text-gray-800 leading-relaxed max-w-md font-semibold">
+                  Lucknow, Uttar Pradesh, India
+                </p>
+                <p className="text-sm text-gray-800 leading-relaxed max-w-md  font-semibold">
+                  Support: <span className="font-semibold text-sm">support@careerboat.ai</span>
+                </p>
+              </div>
+              {/*   RIGHT NAVIGATION*/}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12">
+                {/* PRODUCT */}
+                <div>
+                  {/* <h3 className="font-semibold text-md mb-3 text-black">
+                    Quick links
+                  </h3>
+                  <ul className="space-y-3.5 text-gray-600">
+                    <li>
+                      <a
+                        href="/#howItWorks"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px] cursor-pointer"
+                      // onClick={(e) => handleNav(e, 'howItWorks')}
+                      >
+                        How it works
+                      </a>
+                    </li>
+                    <li>
+                      <Link
+                        href="https://careerboat.ai/#pricing"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                      // onClick={(e) => handleNav(e, 'pricing')}
+                      >
+                        Pricing
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="https://careerboat.ai/#faq"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                      // onClick={(e) => handleNav(e, 'faq')}
+                      >
+                        F&Q's
+                      </Link>
+                    </li>
 
 
-              {/* Social Icons */}
-              <div className="flex gap-4 mt-4 text-lg">
-                <span className="cursor-pointer hover:text-blue-500">
-                  <Link href="https://www.linkedin.com/company/careerboat-ai/" target='blank' className=""> <FaLinkedinIn className="text-[#0A66C2] w-5 h-5 mx-auto" /></Link>
-                </span>
-                <span className="cursor-pointer hover:text-pink-400">
-                  <Link href="https://www.instagram.com/careerboat.ai?igsh=MWsyZHl5a2djMTIwbQ==" target='blank' className=""> <FaInstagram className="text-[#E1306C] w-5 h-5 mx-auto" /></Link>
-                </span>
-                <span className="cursor-pointer hover:text-blue-400">
-                  <Link href="https://x.com/careerboatai?s=21" target='blank' className=""> <FaXTwitter className=" w-5 h-5 mx-auto" /></Link>
-                </span>
 
-                <span className="cursor-pointer hover:text-blue-500">
-                  <Link href="https://youtube.com/@careerboat-ai?si=oeKfNrfI3KoUYj61" target='blank' className="">  <FaYoutube className="text-red-500 w-5 h-5 mx-auto" /></Link>
-                </span>
+                  </ul> */}
+                </div>
+
+
+                {/* FEATURES */}
+                <div>
+                  <h3 className="font-semibold mb-3 text-md text-black">
+                    Features
+                  </h3>
+
+                  <ul className="space-y-3.5 text-[15px] text-gray-600">
+
+                    <li>
+                      <Link
+                        href="https://careerboat.ai/resume-builder"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        target='_blank'
+                      >
+                        AI Resume Builder
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        href="https://careerboat.ai/ai-interview-prep"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        target='_blank'
+                      >
+                        AI Interview Prep
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="https://careerboat.ai/job-explore"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        target='_blank'
+                      >
+                        Job Explorer
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="https://careerboat.ai/job-tracker"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        target='_blank'
+                      >
+                        Job Tracker
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        href="https://careerboat.ai/auto-apply"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        target='_blank'
+                      >
+                        AI Auto Apply
+                      </Link>
+                    </li>
+                    {/* <li>
+                      <a
+                        onClick={(e) => handleNav(e, 'extensionCard')}
+                        className="hover:text-[#4f47e5] transition-colors text-[15px] cursor-pointer"
+                      >
+                        AI Career Counselor
+                      </a>
+                    </li> */}
+
+                    <li>
+                      <Link
+                        href="https://careerboat.ai/chrome-extension"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        target='_blank'
+                      >
+                        Chrome Extension
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="https://careerboat.ai/referral-finder"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        target='_blank'
+                      >
+                        Referral Finder
+                      </Link>
+                    </li>
+
+                  </ul>
+                </div>
+
+
+                {/* COMPANY */}
+                <div>
+                  <h3 className="font-semibold mb-3 text-md text-black">
+                    Company
+                  </h3>
+
+                  <ul className="space-y-3.5 text-[15px] text-gray-600">
+
+                    <li>
+                      <Link
+                        href="https://careerboat.ai/about-us"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        target='_blank'
+                      >
+                        About Us
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        href="https://careerboat.ai/privacy-policy"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        target='_blank'
+                      >
+                        Privacy Policy
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        href="https://careerboat.ai/legal-service"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        target='_blank'
+                      >
+                        Terms of Service
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+
+
+                {/* SOCIAL */}
+                <div>
+                  <h3 className="font-semibold mb-3 text-md text-black">
+                    Social
+                  </h3>
+                  <ul className="space-y-3.5 text-[15px] text-gray-600  ">
+                    <li>
+                      <a href="https://www.linkedin.com/company/careerboat-ai/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                      >
+                        LinkedIn
+                      </a>
+                    </li>
+
+                    <li>
+                      <a href="https://www.instagram.com/careerboat.ai"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                      >
+                        Instagram
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://x.com/careerboatai"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                      >
+                        X
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://youtube.com/@careerboat-ai"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-[#4f47e5] text-[15px] transition-colors"
+                      >
+                        YouTube
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
 
-            {/* Right Section */}
-            <div className="flex gap-10 md:gap-20 flex-wrap">
-              {/* Products */}
-              <div className=''>
-                <h3 className="font-semibold mb-3">Products</h3>
-                <ul className="space-y-2 text-sm text-gray-300">
-                  <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat.ai/" className="text-sm" target='blank'>AI Career Counselor </Link>
-                  </li>
-                  <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat.ai/chrome-extension" className="text-sm" target='blank'>Chrome Extension </Link>
-                  </li>
-                </ul>
-              </div>
-              <div className=''>
-                <h3 className="font-semibold mb-3">Features</h3>
-                <ul className="space-y-2 text-sm text-gray-300">
-                  <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat.ai/resume-builder" className="text-sm" target='blank'>AI Resume Builder </Link>
-                  </li>
-                  <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat.ai/ai-interview-prep" className="text-sm" target='blank'>AI Interview Prep </Link>
-                  </li>
-                  <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat.ai/job-tracker" className="text-sm" target='blank'>Job Tracker </Link>
-                  </li>
-                </ul>
-              </div>
-              {/* More About */}
-              <div className=''>
-                <h3 className="font-semibold mb-3">More About</h3>
-                <ul className="space-y-2 text-sm text-gray-300">
-                  <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat.ai/about-us" className="text-sm" target='blank'>About Us</Link>
-                  </li>
-                  <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat.ai/privacy-policy" className="text-sm" target='blank'>Privacy Policy</Link>
-                  </li>
-                  <li className="hover:text-white cursor-pointer text-sm">
-                    <Link href="https://careerboat.ai/legal-service" className="text-sm" target='blank'>Terms of Service</Link>
-                  </li>
-                </ul>
-              </div>
+
+            <div className=" mt-10 pt-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+              {/* <p className="text-xs text-gray-300">
+            All rights reserved © {new Date().getFullYear()} Careerboat.ai Pvt. Ltd.
+          </p>
+          <p className="text-xs text-gray-300">
+            Lucknow, Uttar Pradesh, India
+          </p> */}
+
             </div>
+            <div className="overflow-hidden h-[90%] relative">
+              <div className="sticky translate-y-3 md:translate-y-5">
+                <p className="text-5xl md:text-8xl font-bold bg-gradient-to-r from-[#2210e1] to-[#a37e44] bg-clip-text text-center text-transparent">
+                  Careerboat.
+                  <span className="font-ivy italic text-5xl md:text-8xl font-bold">
+                    ai
+                  </span>
+                </p>
+              </div>
+
+              {/* Version */}
+              <span className="hidden md:block absolute text-gray-500 text-[8px] bottom-0 right-0 md:text-[10px]">
+                {version} {timeStamp}
+              </span>
+            </div>
+
           </div>
-
-          {/* Divider */}
-          <div className="border-t border-gray-700 mt-10 mb-1 md:mb-3"></div>
-
-          <div className="overflow-hidden h-[90%] relative">
-            <div className="sticky translate-y-2 md:translate-y-5">
-              <p className="text-4xl md:text-8xl font-bold bg-gradient-to-r from-[#2210e1] to-[#a37e44] bg-clip-text text-center text-transparent">
-                Careerboat.
-                <span className="font-ivy italic text-4xl md:text-8xl font-bold">
-                  ai
-                </span>
-              </p>
-
-            </div>
-            <span className="hidden md:block absolute text-gray-500 text-[8px] bottom-0 right-0 md:text-[10px] float-end ">{version} {timeStamp}</span>
-
-          </div>
-
         </footer>
 
       </body>
