@@ -8,6 +8,8 @@ import { HOME_DESCRIPTION, HOME_TITLE, buildHomeJsonLd } from '@/lib/schema';
 import { SITE_URL, coverSrc, decodeHtmlEntities, getRecentPosts, imageAlt, stripTags } from '@/lib/wp';
 import Loading from './loading';
 
+export const dynamic = 'force-dynamic';
+
 type HomePageProps = {
   searchParams?: { [key: string]: string | string[] | undefined };
 };
@@ -17,10 +19,6 @@ const ITEMS_PER_PAGE = 9;
 function currentPageFrom(searchParams?: HomePageProps['searchParams']) {
   const pageParam = searchParams?.page;
   return parseInt(typeof pageParam === 'string' ? pageParam : Array.isArray(pageParam) ? pageParam[0] : '1', 10) || 1;
-}
-
-function pageHref(page: number) {
-  return page <= 1 ? '/' : `/?page=${page}`;
 }
 
 export async function generateMetadata({ searchParams }: HomePageProps): Promise<Metadata> {
@@ -59,19 +57,44 @@ function PostsGridSkeleton() {
     </div>
   );
 }
+
 function getCategoryFromTitle(title: string): string {
   const lowerTitle = title.toLowerCase();
   if (lowerTitle.includes('resume') || lowerTitle.includes('cv')) return 'resumes';
   if (lowerTitle.includes('interview')) return 'interviews';
-  if (lowerTitle.includes('network') || lowerTitle.includes('linkedin') || lowerTitle.includes('connection') || lowerTitle.includes('referral')) return 'networking';
-  if (lowerTitle.includes('negotiat') || lowerTitle.includes('offer') || lowerTitle.includes('salary')) return 'negotiation';
-  if (lowerTitle.includes('lead') || lowerTitle.includes('manag') || lowerTitle.includes('director') || lowerTitle.includes('senior')) return 'leadership';
-  if (lowerTitle.includes('productiv') || lowerTitle.includes('time') || lowerTitle.includes('habit')) return 'productivity';
+  if (
+    lowerTitle.includes('network') ||
+    lowerTitle.includes('linkedin') ||
+    lowerTitle.includes('connection') ||
+    lowerTitle.includes('referral')
+  ) {
+    return 'networking';
+  }
+  if (lowerTitle.includes('negotiat') || lowerTitle.includes('offer') || lowerTitle.includes('salary')) {
+    return 'negotiation';
+  }
+  if (
+    lowerTitle.includes('lead') ||
+    lowerTitle.includes('manag') ||
+    lowerTitle.includes('director') ||
+    lowerTitle.includes('senior')
+  ) {
+    return 'leadership';
+  }
+  if (lowerTitle.includes('productiv') || lowerTitle.includes('time') || lowerTitle.includes('habit')) {
+    return 'productivity';
+  }
   if (lowerTitle.includes('career')) return 'career';
   return 'other';
 }
 
-async function PostsGrid({ currentPage, currentCategory }: { currentPage: number; currentCategory: string }) {
+async function PostsGrid({
+  currentPage,
+  currentCategory
+}: {
+  currentPage: number;
+  currentCategory: string;
+}) {
   const itemsPerPage = 9;
 
   const allPosts = await getRecentPosts(100);
@@ -82,19 +105,21 @@ async function PostsGrid({ currentPage, currentCategory }: { currentPage: number
   }
 
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / itemsPerPage));
+  const validPage = Math.min(Math.max(1, currentPage), totalPages);
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
+  const startIndex = (validPage - 1) * itemsPerPage;
   const posts = filteredPosts.slice(startIndex, startIndex + itemsPerPage);
 
-  const prevPage = currentPage > 1 ? currentPage - 1 : null;
-  const nextPage = currentPage < totalPages ? currentPage + 1 : null;
+  const prevPage = validPage > 1 ? validPage - 1 : null;
+  const nextPage = validPage < totalPages ? validPage + 1 : null;
 
   const getPageHref = (page: number) => {
     return currentCategory === 'all' ? `/?page=${page}` : `/?category=${currentCategory}&page=${page}`;
   };
+
   return (
     <>
-      <JsonLd data={buildHomeJsonLd(posts, currentPage)} />
+      <JsonLd data={buildHomeJsonLd(posts, validPage)} />
       {posts.length === 0 ? (
         <p className="rounded-xl border border-line bg-white p-4 text-clay">No posts found yet.</p>
       ) : (
@@ -137,7 +162,7 @@ async function PostsGrid({ currentPage, currentCategory }: { currentPage: number
         <div className="mt-12 flex flex-wrap items-center justify-center gap-2 sm:gap-4">
           {prevPage ? (
             <Link
-              href={pageHref(prevPage)}
+              href={getPageHref(prevPage)}
               className="rounded-md border border-indigo-600 bg-white px-3 py-2 text-sm font-medium text-indigo-600 transition sm:px-4"
             >
               Previous
@@ -157,14 +182,18 @@ async function PostsGrid({ currentPage, currentCategory }: { currentPage: number
 
               return pages.map((item, idx) =>
                 item === 'dots' ? (
-                  <span key={`dots-${idx}`} className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center text-sm text-clay select-none">
+                  <span
+                    key={`dots-${idx}`}
+                    className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center text-sm text-clay select-none"
+                  >
                     …
                   </span>
                 ) : (
                   <Link
                     key={item}
                     href={getPageHref(item as number)}
-                    className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-md text-sm font-medium transition ${currentPage === item ? 'bg-ember text-white' : 'hover:bg-gray-100 text-clay'}`}
+                    className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-md text-sm font-medium transition ${validPage === item ? 'bg-ember text-white' : 'hover:bg-gray-100 text-clay'
+                      }`}
                   >
                     {item}
                   </Link>
@@ -175,7 +204,7 @@ async function PostsGrid({ currentPage, currentCategory }: { currentPage: number
 
           {nextPage ? (
             <Link
-              href={pageHref(nextPage)}
+              href={getPageHref(nextPage)}
               className="rounded-md border border-indigo-600 bg-white px-3 py-2 text-sm font-medium text-indigo-600 transition sm:px-4"
             >
               Next
@@ -191,16 +220,26 @@ async function PostsGrid({ currentPage, currentCategory }: { currentPage: number
   );
 }
 
-export default function HomePage(props: { searchParams?: { [key: string]: string | string[] | undefined } }) {
+export default function HomePage(props: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   const pageParam = props.searchParams?.page;
-  const currentPage = parseInt(typeof pageParam === 'string' ? pageParam : Array.isArray(pageParam) ? pageParam[0] : '1', 10) || 1;
+  const currentPage =
+    parseInt(
+      typeof pageParam === 'string' ? pageParam : Array.isArray(pageParam) ? pageParam[0] : '1',
+      10
+    ) || 1;
   const categoryParam = props.searchParams?.category;
-  const currentCategory = typeof categoryParam === 'string' ? categoryParam : 'all';
+  const currentCategory =
+    typeof categoryParam === 'string'
+      ? categoryParam.toLowerCase()
+      : Array.isArray(categoryParam) && categoryParam[0]
+        ? categoryParam[0].toLowerCase()
+        : 'all';
 
   return (
     <main>
       <section className="mx-auto w-[min(1120px,92vw)] py-16 text-center md:py-16">
-        {/* <p className="text-xs uppercase tracking-[0.16em] text-ember">Career Growth</p> */}
         <h1 className="mx-auto mt-3 max-w-3xl text-3xl font-bold leading-tight md:text-6xl">
           Learn practical skills that move your career forward.
         </h1>
@@ -208,16 +247,26 @@ export default function HomePage(props: { searchParams?: { [key: string]: string
           Actionable writing on resumes, interviews, and role transitions from beginner to senior levels.
         </p>
         <div className="mt-8 md:mt-16 flex flex-wrap justify-center gap-3">
-          {['All', 'Resumes', 'Interviews', 'Networking', 'Negotiation', 'Leadership', 'Productivity', "Career", "other"].map((category) => {
+          {[
+            'All',
+            'Resumes',
+            'Interviews',
+            'Networking',
+            'Negotiation',
+            'Leadership',
+            'Productivity',
+            'Career',
+            'other'
+          ].map((category) => {
             const categorySlug = category.toLowerCase();
             const isSelected = currentCategory === categorySlug;
             return (
               <Link
                 key={category}
                 href={categorySlug === 'all' ? '/' : `/?category=${categorySlug}`}
-                className={`rounded-full border px-4 py-1.5 min-w-20  text-sm font-semibold shadow-md transition-all hover:-translate-y-0.5 ${isSelected
+                className={`rounded-full border px-4 py-1.5 min-w-20 text-sm font-semibold shadow-md transition-all hover:-translate-y-0.5 ${isSelected
                   ? 'border-ember bg-ember text-white'
-                  : 'border-line border-gray-700 bg-white text-clay hover:border-ember text-gray-800 hover:text-ember '
+                  : 'border-line border-gray-700 bg-white text-clay hover:border-ember text-gray-800 hover:text-ember'
                   }`}
               >
                 {category}
@@ -228,7 +277,10 @@ export default function HomePage(props: { searchParams?: { [key: string]: string
       </section>
 
       <section className="mx-auto w-[min(1120px,92vw)] pb-20">
-        <Suspense fallback={<PostsGridSkeleton />}>
+        <Suspense
+          key={`${currentCategory}-${currentPage}`}
+          fallback={<PostsGridSkeleton />}
+        >
           <PostsGrid currentPage={currentPage} currentCategory={currentCategory} />
         </Suspense>
 

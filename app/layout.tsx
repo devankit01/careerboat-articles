@@ -124,9 +124,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <p className="text-sm text-gray-800 leading-relaxed max-w-md mt-5 font-semibold">
                   Careerboat.ai Private Limited
                 </p>
-                <p className="text-sm text-gray-800 leading-relaxed max-w-md font-semibold">
+                {/* <p className="text-sm text-gray-800 leading-relaxed max-w-md font-semibold">
                   Lucknow, Uttar Pradesh, India
-                </p>
+                </p> */}
                 <p className="text-sm text-gray-800 leading-relaxed max-w-md  font-semibold">
                   Support: <span className="font-semibold text-sm">support@careerboat.ai</span>
                 </p>
@@ -135,41 +135,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12">
                 {/* PRODUCT */}
                 <div>
-                  {/* <h3 className="font-semibold text-md mb-3 text-black">
+                  <h3 className="font-semibold text-md mb-3 text-black">
                     Quick links
                   </h3>
-                  <ul className="space-y-3.5 text-gray-600">
+                  <ul className="space-y-3.5 text-gray-600 font-normal">
                     <li>
                       <a
                         href="/#howItWorks"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px] cursor-pointer"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px] cursor-pointer"
                       // onClick={(e) => handleNav(e, 'howItWorks')}
                       >
-                        How it works
+                        How it Works
                       </a>
                     </li>
                     <li>
                       <Link
-                        href="https://careerboat.ai/#pricing"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
-                      // onClick={(e) => handleNav(e, 'pricing')}
+                        href="https://careerboat.ai/login"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                       >
-                        Pricing
+                        Start for Free
                       </Link>
                     </li>
-                    <li>
-                      <Link
-                        href="https://careerboat.ai/#faq"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
-                      // onClick={(e) => handleNav(e, 'faq')}
-                      >
-                        F&Q's
-                      </Link>
-                    </li>
-
-
-
-                  </ul> */}
+                  </ul>
                 </div>
 
 
@@ -179,12 +166,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     Features
                   </h3>
 
-                  <ul className="space-y-3.5 text-[15px] text-gray-600">
+                  <ul className="space-y-3.5 text-[14px] text-gray-600 font-normal">
 
                     <li>
                       <Link
                         href="https://careerboat.ai/resume-builder"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                         target='_blank'
                       >
                         AI Resume Builder
@@ -194,7 +181,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <li>
                       <Link
                         href="https://careerboat.ai/ai-interview-prep"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                         target='_blank'
                       >
                         AI Interview Prep
@@ -203,7 +190,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <li>
                       <Link
                         href="https://careerboat.ai/job-explore"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                         target='_blank'
                       >
                         Job Explorer
@@ -212,7 +199,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <li>
                       <Link
                         href="https://careerboat.ai/job-tracker"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                         target='_blank'
                       >
                         Job Tracker
@@ -222,7 +209,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <li>
                       <Link
                         href="https://careerboat.ai/auto-apply"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                         target='_blank'
                       >
                         AI Auto Apply
@@ -231,7 +218,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     {/* <li>
                       <a
                         onClick={(e) => handleNav(e, 'extensionCard')}
-                        className="hover:text-[#4f47e5] transition-colors text-[15px] cursor-pointer"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px] cursor-pointer"
                       >
                         AI Career Counselor
                       </a>
@@ -240,7 +227,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <li>
                       <Link
                         href="https://careerboat.ai/chrome-extension"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                         target='_blank'
                       >
                         Chrome Extension
@@ -249,7 +236,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <li>
                       <Link
                         href="https://careerboat.ai/referral-finder"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                         target='_blank'
                       >
                         Referral Finder
@@ -266,12 +253,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     Company
                   </h3>
 
-                  <ul className="space-y-3.5 text-[15px] text-gray-600">
+                  <ul className="space-y-3.5 text-[14px] text-gray-600 font-normal">
 
                     <li>
                       <Link
                         href="https://careerboat.ai/about-us"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                         target='_blank'
                       >
                         About Us
@@ -281,7 +268,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <li>
                       <Link
                         href="https://careerboat.ai/privacy-policy"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                         target='_blank'
                       >
                         Privacy Policy
@@ -291,7 +278,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <li>
                       <Link
                         href="https://careerboat.ai/legal-service"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                         target='_blank'
                       >
                         Terms of Service
@@ -306,12 +293,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <h3 className="font-semibold mb-3 text-md text-black">
                     Social
                   </h3>
-                  <ul className="space-y-3.5 text-[15px] text-gray-600  ">
+                  <ul className="space-y-3.5 text-[14px] text-gray-600 font-normal ">
                     <li>
                       <a href="https://www.linkedin.com/company/careerboat-ai/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                       >
                         LinkedIn
                       </a>
@@ -321,7 +308,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       <a href="https://www.instagram.com/careerboat.ai"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                       >
                         Instagram
                       </a>
@@ -330,7 +317,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       <a href="https://x.com/careerboatai"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-[#4f47e5] transition-colors text-[15px]"
+                        className="hover:text-[#4f47e5] transition-colors text-[14px]"
                       >
                         X
                       </a>
@@ -339,7 +326,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       <a href="https://youtube.com/@careerboat-ai"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-[#4f47e5] text-[15px] transition-colors"
+                        className="hover:text-[#4f47e5] text-[14px] transition-colors"
                       >
                         YouTube
                       </a>
