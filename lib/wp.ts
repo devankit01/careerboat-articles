@@ -102,7 +102,7 @@ async function wpFetch<T>(query: string, variables: Record<string, unknown> = {}
             'User-Agent': 'Mozilla/5.0 (compatible; CareerboatArticles/1.0; +https://articles.careerboat.ai)'
           },
           body: JSON.stringify({ query, variables }),
-          next: { revalidate: 300 }
+          next: { revalidate: 60 }
         });
 
         if (isRetryableStatus(response.status)) {
@@ -194,16 +194,10 @@ export async function getSitemapPosts(): Promise<SitemapPost[]> {
   return posts;
 }
 
-const recentPostsMemo = new Map<number, Promise<PostCard[]>>();
-
 export async function getRecentPosts(first: number = 100): Promise<PostCard[]> {
-  const cached = recentPostsMemo.get(first);
-  if (cached) return cached;
-
-  const pending = (async () => {
-    try {
-      const data = await wpFetch<{ posts?: { nodes?: PostCard[] } }>(
-        `
+  try {
+    const data = await wpFetch<{ posts?: { nodes?: PostCard[] } }>(
+      `
       query GetRecentPosts($first: Int!) {
         posts(first: $first) {
           nodes {
@@ -225,19 +219,14 @@ export async function getRecentPosts(first: number = 100): Promise<PostCard[]> {
         }
       }
     `,
-        { first }
-      );
+      { first }
+    );
 
-      return data.posts?.nodes ?? [];
-    } catch (error) {
-      recentPostsMemo.delete(first);
-      console.error('Failed to load recent posts from WP GraphQL:', error);
-      return [];
-    }
-  })();
-
-  recentPostsMemo.set(first, pending);
-  return pending;
+    return data.posts?.nodes ?? [];
+  } catch (error) {
+    console.error('Failed to load recent posts from WP GraphQL:', error);
+    return [];
+  }
 }
 
 export async function getPostBySlug(slug: string): Promise<PostDetail | null> {

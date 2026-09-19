@@ -17,12 +17,9 @@ body {
 }
 
 .prose-content .not-prose .tldr-prose {
-  @apply font-bold text-[#171717];
+  @apply text-[#171717];
 }
 
-.prose-content .not-prose .tldr-prose * {
-  @apply font-bold;
-}
 
 .not-prose .tldr-prose p {
   @apply mt-0;
