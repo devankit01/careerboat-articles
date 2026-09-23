@@ -49,7 +49,7 @@ import ToastProvider from '../components/helpers/ToastProvider';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const timeStamp = 'V-0.2.20';
-  const version = '(16-09-2026 22:00:00)';
+  const version = '(23-09-2026 12:30:00)';
 
 
   return (

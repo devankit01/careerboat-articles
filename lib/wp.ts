@@ -1,6 +1,6 @@
 export const WP_GRAPHQL_ENDPOINT = 'https://red-tiger-788578.hostingersite.com/graphql';
 export const WP_SITE_URL = 'https://red-tiger-788578.hostingersite.com';
-export const SITE_URL = 'https://articles.careerboat.ai';
+export const SITE_URL = 'https://careerboat.ai/blog';
 
 type GraphQLResponse<T> = {
   data?: T;

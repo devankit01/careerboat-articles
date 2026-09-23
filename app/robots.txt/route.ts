@@ -6,7 +6,7 @@ export function GET() {
   const body = `User-agent: *
 Allow: /
 
-Host: articles.careerboat.ai
+Host: careerboat.ai/blog
 Sitemap: ${SITE_URL}/sitemap.xml
 `;
 
