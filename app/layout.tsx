@@ -30,13 +30,13 @@ const ivy = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://articles.careerboat.ai'),
   title: {
-    default: 'Career Articles & Career Advice | Careerboat',
+    default: 'Career Blog & Career Advice | Careerboat',
     template: '%s'
   },
   description: 'Actionable writing on resumes, interviews, and role transitions from beginner to senior levels.',
   openGraph: {
     type: 'website',
-    siteName: 'Careerboat Articles',
+    siteName: 'Careerboat Blog',
     locale: 'en_US'
   },
   icons: {
@@ -48,8 +48,8 @@ export const metadata: Metadata = {
 import ToastProvider from '../components/helpers/ToastProvider';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const timeStamp = 'V-0.2.20';
-  const version = '(23-09-2026 12:30:00)';
+  const timeStamp = 'V-0.2.21';
+  const version = '(23-09-2026 14:40:00)';
 
 
   return (

@@ -22,7 +22,7 @@ export async function generateMetadata({ searchParams }: HomePageProps): Promise
   const isPaged = currentPage > 1;
 
   return {
-    title: isPaged ? `Career Articles — Page ${currentPage} | Careerboat` : HOME_TITLE,
+    title: isPaged ? `Career Blog — Page ${currentPage} | Careerboat` : HOME_TITLE,
     description: HOME_DESCRIPTION,
     alternates: {
       canonical: isPaged ? `${SITE_URL}/?page=${currentPage}` : `${SITE_URL}/`

@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       description: ogDescription,
       url: canonical,
       type: 'article',
-      siteName: 'Careerboat Articles',
+      siteName: 'Careerboat Blog',
       locale: 'en_US',
       publishedTime: post.date || undefined,
       modifiedTime: post.modified || post.date || undefined,
@@ -182,11 +182,11 @@ export default async function PostPage({ params }: PostPageProps) {
         <section className="mt-12 rounded-2xl border border-line bg-[#e7eaee] px-5 py-8 shadow-[0_12px_28px_rgba(27,39,94,0.06)] md:mt-16 md:px-8 md:py-10">
           <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs uppercase tracking-[0.16em] text-ember">Related Articles</p>
+              <p className="text-xs uppercase tracking-[0.16em] text-ember">Related Blog</p>
               <h2 className="mt-1 text-2xl font-bold md:text-3xl">Keep reading</h2>
             </div>
             <Link href="/" className="text-sm font-semibold text-ember hover:underline">
-              View all articles
+              View all blog
             </Link>
           </div>
 
