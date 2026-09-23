@@ -9,6 +9,7 @@ import { SITE_URL, coverSrc, decodeHtmlEntities, getRecentPosts, imageAlt, strip
 import Loading from './loading';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 type HomePageProps = {
   searchParams?: { [key: string]: string | string[] | undefined };
@@ -114,7 +115,10 @@ async function PostsGrid({
   const nextPage = validPage < totalPages ? validPage + 1 : null;
 
   const getPageHref = (page: number) => {
-    return currentCategory === 'all' ? `/?page=${page}` : `/?category=${currentCategory}&page=${page}`;
+    if (currentCategory === 'all') {
+      return page === 1 ? '/' : `/?page=${page}`;
+    }
+    return page === 1 ? `/?category=${currentCategory}` : `/?category=${currentCategory}&page=${page}`;
   };
 
   return (
@@ -126,7 +130,7 @@ async function PostsGrid({
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <article key={post.slug} className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-[0_12px_28px_rgba(27,39,94,0.06)] transition hover:-translate-y-0.5">
-              <Link href={`/${post.slug}`} className="relative block h-48 w-full bg-[#e7e5ff]">
+              <Link href={`/${post.slug}`} prefetch={false} className="relative block h-48 w-full bg-[#e7e5ff]">
                 <Image
                   src={coverSrc(post.featuredImage?.node?.sourceUrl) || '/logo.jpeg'}
                   alt={imageAlt(post.featuredImage?.node?.altText, post.title)}
@@ -138,7 +142,7 @@ async function PostsGrid({
               </Link>
               <div className="flex flex-1 flex-col p-5 items-between justify-between">
                 <div>
-                  <Link href={`/${post.slug}`}>
+                  <Link href={`/${post.slug}`} prefetch={false}>
                     <h3 className="text-xl font-semibold">{decodeHtmlEntities(post.title)}</h3>
                   </Link>
                   <p className="mt-2 text-clay">{excerpt(post.excerpt)}</p>
@@ -147,6 +151,7 @@ async function PostsGrid({
                   <p className="text-sm text-clay break-words">Author : {decodeHtmlEntities(post.author?.node?.name || 'Careerboat Team')}</p>
                   <Link
                     href={`/${post.slug}`}
+                    prefetch={false}
                     className="w-fit rounded-md bg-ember px-3 py-1.5 text-sm font-semibold text-white shadow-[0_8px_18px_rgba(79,70,229,0.2)] hover:bg-[#4338ca]"
                   >
                     Read Post
@@ -163,6 +168,7 @@ async function PostsGrid({
           {prevPage ? (
             <Link
               href={getPageHref(prevPage)}
+              prefetch={false}
               className="rounded-md border border-indigo-600 bg-white px-3 py-2 text-sm font-medium text-indigo-600 transition sm:px-4"
             >
               Previous
@@ -192,6 +198,7 @@ async function PostsGrid({
                   <Link
                     key={item}
                     href={getPageHref(item as number)}
+                    prefetch={false}
                     className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-md text-sm font-medium transition ${validPage === item ? 'bg-ember text-white' : 'hover:bg-gray-100 text-clay'
                       }`}
                   >
@@ -205,6 +212,7 @@ async function PostsGrid({
           {nextPage ? (
             <Link
               href={getPageHref(nextPage)}
+              prefetch={false}
               className="rounded-md border border-indigo-600 bg-white px-3 py-2 text-sm font-medium text-indigo-600 transition sm:px-4"
             >
               Next
@@ -256,7 +264,7 @@ export default function HomePage(props: {
             'Leadership',
             'Productivity',
             'Career',
-            'other'
+            'Other'
           ].map((category) => {
             const categorySlug = category.toLowerCase();
             const isSelected = currentCategory === categorySlug;
@@ -264,6 +272,7 @@ export default function HomePage(props: {
               <Link
                 key={category}
                 href={categorySlug === 'all' ? '/' : `/?category=${categorySlug}`}
+                prefetch={false}
                 className={`rounded-full border px-4 py-1.5 min-w-20 text-sm font-semibold shadow-md transition-all hover:-translate-y-0.5 ${isSelected
                   ? 'border-ember bg-ember text-white'
                   : 'border-line border-gray-700 bg-white text-clay hover:border-ember text-gray-800 hover:text-ember'
